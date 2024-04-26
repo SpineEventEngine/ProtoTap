@@ -28,13 +28,7 @@
 
 rootProject.name = "ProtoTap"
 
-include(
-    "api",
-    "protoc-plugin",
-    "gradle-plugin"
-)
-
-dependencyResolutionManagement {
+pluginManagement {
     repositories {
         mavenLocal()
         mavenCentral()
@@ -42,7 +36,18 @@ dependencyResolutionManagement {
     }
 }
 
-pluginManagement {
+include(
+    "api",
+    "protoc-plugin",
+    "gradle-plugin"
+)
+
+plugins {
+    // https://github.com/gradle/foojay-toolchains
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+}
+
+dependencyResolutionManagement {
     repositories {
         mavenLocal()
         mavenCentral()
