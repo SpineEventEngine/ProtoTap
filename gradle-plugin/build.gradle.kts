@@ -30,6 +30,7 @@ import io.spine.internal.dependency.Kotlin
 import io.spine.internal.dependency.Protobuf
 import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.isSnapshot
+import io.spine.internal.gradle.publish.SpinePublishing
 
 plugins {
     `java-gradle-plugin`
@@ -103,7 +104,7 @@ gradlePlugin {
     website.set("https://spine.io")
     vcsUrl.set("https://github.com/SpineEventEngine/ProtoTap")
     plugins {
-        create("protoTapPlugin") {
+        create("prototapPlugin") {
             id = "io.spine.prototap"
             implementationClass = "io.spine.tools.prototap.gradle.Plugin"
             displayName = "ProtoTap Gradle Plugin"
@@ -117,8 +118,36 @@ gradlePlugin {
     )
 }
 
+// Add the common prefix to the `pluginMaven` publication.
+//
+// The publication is automatically created in `project.afterEvaluate` by Plugin Publishing plugin.
+// See https://docs.gradle.org/current/userguide/java_gradle_plugin.html#maven_publish_plugin
+//
+// We add the prefix also in `afterEvaluate` assuming we're later in the sequence of
+// the actions and the publications have been already created.
+//
+project.afterEvaluate {
+    publishing {
+        // Get the prefix used for all the modules of this project.
+        val prefix = project.rootProject.the<SpinePublishing>().artifactPrefix
+
+        // Add the prefix to the `pluginMaven` publication only.
+        publications.named<MavenPublication>("pluginMaven") {
+            if (!artifactId.startsWith(prefix)) {
+                artifactId = prefix + artifactId
+            }
+        }
+
+        // Do not add the prefix for the publication which produces
+        // the `io.spine.prototap.gradle.plugin` marker.
+    }
+}
+
+// The version declared in `version.gradle.kts`.
 val versionToPublish: String by extra
 
+// Do not attempt to publish snapshot versions to comply with publishing rules.
+// See: https://plugins.gradle.org/docs/publish-plugin#approval
 val publishPlugins: Task by tasks.getting {
     enabled = !versionToPublish.isSnapshot()
 }
