@@ -113,7 +113,8 @@ fun Module.forceConfigurations() {
                     Coroutines.core,
                     Coroutines.bom,
                     Coroutines.coreJvm,
-                    Jackson.Junior.objects
+                    Jackson.Junior.objects,
+                    Spine.reflect
                 )
             }
         }

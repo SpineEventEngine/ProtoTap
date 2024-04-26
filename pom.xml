@@ -24,6 +24,18 @@ all modules and does not describe the project structure per-subproject.
 
 <dependencies>
   <dependency>
+    <groupId>io.spine.tools</groupId>
+    <artifactId>spine-plugin-base</artifactId>
+    <version>2.0.0-SNAPSHOT.208</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-gradle-plugin-api</artifactId>
+    <version>1.9.23</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-stdlib-jdk8</artifactId>
     <version>1.8.22</version>
@@ -106,6 +118,12 @@ all modules and does not describe the project structure per-subproject.
     <version>9+181-r4173-1</version>
   </dependency>
   <dependency>
+    <groupId>com.google.protobuf</groupId>
+    <artifactId>protobuf-gradle-plugin</artifactId>
+    <version>0.9.4</version>
+    <scope>provided</scope>
+  </dependency>
+  <dependency>
     <groupId>com.puppycrawl.tools</groupId>
     <artifactId>checkstyle</artifactId>
     <version>10.12.1</version>
@@ -143,6 +161,11 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-gradle-plugin</artifactId>
+    <version>1.9.23</version>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-klib-commonizer-embeddable</artifactId>
     <version>1.8.22</version>
   </dependency>
@@ -150,6 +173,16 @@ all modules and does not describe the project structure per-subproject.
     <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-scripting-compiler-embeddable</artifactId>
     <version>1.8.22</version>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-test-junit5</artifactId>
+    <version>1.9.23</version>
+  </dependency>
+  <dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.10.0</version>
   </dependency>
 </dependencies>
 
