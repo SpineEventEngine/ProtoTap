@@ -40,6 +40,7 @@ import org.gradle.api.Project
 import org.gradle.api.file.DuplicatesStrategy.INCLUDE
 import com.google.protobuf.gradle.id
 import io.spine.tools.prototap.Names.DESCRIPTOR_SET_FILE
+import org.gradle.api.tasks.TaskContainer
 import org.gradle.language.jvm.tasks.ProcessResources
 
 public class Plugin : Plugin<Project> {
@@ -58,14 +59,21 @@ private fun Project.createExtension(): Extension {
     return extension
 }
 
-private val Project.extension: Extension
-    get() = extensions.getByType(Extension::class.java)
-
+/**
+ * Tunes this Gradle project so that we can collect data from `protoc` and
+ * Protobuf Gradle Plugin.
+ */
 private fun Project.tapProtobuf() {
     setProtocArtifact()
     createProtocPlugin()
     tuneProtoTasks()
 }
+
+/**
+ * Obtains the extension our plugin added to this Gradle project.
+ */
+private val Project.extension: Extension
+    get() = extensions.getByType(Extension::class.java)
 
 private fun Project.setProtocArtifact() {
     protobufExtension?.protoc {
@@ -107,20 +115,31 @@ private fun Project.tuneProtoTasks() {
        This, in turn, leads to missing generated sources in the `compileJava` task. */
     protobufExtension?.generateProtoTasks {
         it.ofSourceSet(sourceSetName).forEach { task ->
-            task.tap()
+            task.apply {
+                collectGeneratedJavaCode()
+                addProtocPlugin()
+                grabDescriptorSetFile()
+            }
         }
     }
 }
 
-private fun GenerateProtoTask.tap() {
-    project.processTaskResources.apply {
+private fun GenerateProtoTask.collectGeneratedJavaCode() {
+    project.tasks.processTaskResources.apply {
         from(outputs)
         duplicatesStrategy = INCLUDE
     }
+}
+
+private fun GenerateProtoTask.addProtocPlugin() {
     plugins.apply {
         id(PROTOC_PLUGIN_NAME)
     }
+}
+
+private fun GenerateProtoTask.grabDescriptorSetFile() {
     if (project.extension.generateDescriptorSet.get()) {
+        generateDescriptorSet = true
         descriptorSetOptions.apply {
             path = "${project.buildDir}/resources/test/$PROTOC_PLUGIN_NAME/$DESCRIPTOR_SET_FILE"
             includeSourceInfo = true
@@ -129,5 +148,5 @@ private fun GenerateProtoTask.tap() {
     }
 }
 
-private val Project.processTaskResources: ProcessResources
-    get() = tasks.named("processTestResources", ProcessResources::class.java).get()
+private val TaskContainer.processTaskResources: ProcessResources
+    get() = named("processTestResources", ProcessResources::class.java).get()
