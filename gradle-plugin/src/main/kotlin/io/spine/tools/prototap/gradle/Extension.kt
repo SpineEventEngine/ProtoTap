@@ -38,7 +38,8 @@ import org.gradle.kotlin.dsl.property
 
 public class Extension(project: Project) {
 
-    public val artifact: Property<String> = project.objects.property()
+    public val artifact: Property<String> = project.objects.property<String>()
+        .convention("")
 
     public val sourceSet: Property<SourceSet> = with(project) {
         objects.property<SourceSet>().convention(
