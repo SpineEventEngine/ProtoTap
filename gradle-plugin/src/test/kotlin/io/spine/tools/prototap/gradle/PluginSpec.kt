@@ -30,14 +30,13 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.tools.gradle.task.BaseTaskName.build
 import io.spine.tools.gradle.testing.GradleProject
-import io.spine.tools.prototap.Names.CODE_GENERATOR_REQUEST_FILE
 import io.spine.tools.prototap.Names.GRADLE_PLUGIN_ID
-import io.spine.tools.prototap.Names.outputFile
+import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_FILE
+import io.spine.tools.prototap.Paths.outputRoot
+import io.spine.tools.prototap.Paths.pluginOutputDir
 import java.io.File
 import java.nio.file.Path
-import kotlin.io.path.Path
 import kotlin.io.path.exists
-import org.gradle.api.logging.LogLevel
 import org.gradle.testkit.runner.internal.DefaultGradleRunner
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -50,19 +49,22 @@ internal class PluginSpec {
     private lateinit var projectDir: File
     private lateinit var project: GradleProject
     private lateinit var resultDir: Path
+    private lateinit var pluginDir: Path
 
     @BeforeEach
     fun prepareDir(@TempDir tempDir: File) {
         projectDir = tempDir
-        resultDir = Path(outputFile("$projectDir/build", ""))
+        val buildDir = "$projectDir/build"
+        resultDir = outputRoot(buildDir)
+        pluginDir = pluginOutputDir(buildDir)
     }
 
     @Test
     fun `run with default values`() {
         createProject("default-values")
         runBuild()
-        resultDir.resolve(CODE_GENERATOR_REQUEST_FILE).exists() shouldBe true
         resultDir.resolve("java").countFiles() shouldNotBe 0
+        pluginDir.resolve(CODE_GENERATOR_REQUEST_FILE).exists() shouldBe true
     }
 
     private fun createProject(resourceDir: String) {

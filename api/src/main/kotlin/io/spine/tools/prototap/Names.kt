@@ -32,6 +32,11 @@ package io.spine.tools.prototap
 public object Names {
 
     /**
+     * The ID of the ProtoTap Gradle Plugin.
+     */
+    public const val GRADLE_PLUGIN_ID: String = "io.spine.prototap"
+
+    /**
      * The name of a Gradle project extension added by ProtoTap Gradle Plugin.
      */
     public const val GRADLE_EXTENSION_NAME: String = "protoTap"
@@ -40,17 +45,6 @@ public object Names {
      * The name ProtoTap uses when passing itself to `protoc` compiler.
      */
     public const val PROTOC_PLUGIN_NAME: String = "prototap"
-
-    /**
-     * The name of the file containing `CodeGeneratorRequest` message obtained
-     * by the ProtoTap `protoc` plugins.
-     */
-    public const val CODE_GENERATOR_REQUEST_FILE: String = "CodeGeneratorRequest.binpb"
-
-    /**
-     * The name of the descriptor set file obtained by the ProtoTap Gradle plugin.
-     */
-    public const val DESCRIPTOR_SET_FILE: String = "FileDescriptorSet.binpb"
 
     /**
      * The name of the source set which is used by default for tapping Protobuf compiler.
@@ -77,5 +71,8 @@ public object Names {
      */
     public const val PROTOC_PLUGIN_CLASSIFIER: String = "exe"
 
+    /**
+     * The name of the `java-test-fixtures` plugin.
+     */
     public const val TEST_FIXTURES_PLUGIN_NAME: String = "java-test-fixtures"
 }

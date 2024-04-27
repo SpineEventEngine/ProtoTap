@@ -26,7 +26,9 @@
 
 package io.spine.tools.prototap.gradle
 
+import com.google.common.annotations.VisibleForTesting
 import com.google.protobuf.gradle.GenerateProtoTask
+import com.google.protobuf.gradle.id
 import io.spine.tools.code.manifest.Version
 import io.spine.tools.gradle.Artifact
 import io.spine.tools.gradle.artifact
@@ -35,11 +37,13 @@ import io.spine.tools.gradle.protobuf.protobufExtension
 import io.spine.tools.prototap.Names.GRADLE_EXTENSION_NAME
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_CLASSIFIER
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_NAME
+import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_FILE
+import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
+import io.spine.tools.prototap.Paths.outputFile
+import java.util.*
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.DuplicatesStrategy.INCLUDE
-import com.google.protobuf.gradle.id
-import io.spine.tools.prototap.Names.DESCRIPTOR_SET_FILE
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.language.jvm.tasks.ProcessResources
 
@@ -50,6 +54,23 @@ public class Plugin : Plugin<Project> {
         pluginManager.withPlugin(ProtobufDependencies.gradlePlugin.id) {
             tapProtobuf()
         }
+    }
+
+    public companion object {
+
+        /**
+         * Reads the version of the plugin from the resources.
+         */
+        @JvmStatic
+        @VisibleForTesting
+        public fun readVersion(): String =
+            Version.fromManifestOf(
+                // Use the fully qualified name of our `Plugin` class so that we load
+                // the version for the manifest of our JAR.
+                // Short name would refer to the imported `Plugin` class from Gradle, and
+                // we'd get its version.
+                io.spine.tools.prototap.gradle.Plugin::class.java
+            ).value
     }
 }
 
@@ -93,7 +114,7 @@ private fun Project.createProtocPlugin() {
 }
 
 private val protoTapVersion: String by lazy {
-    Version.fromManifestOf(Plugin::class.java).value
+    io.spine.tools.prototap.gradle.Plugin.readVersion()
 }
 
 private val protocPlugin: Artifact by lazy {
@@ -124,16 +145,23 @@ private fun Project.tuneProtoTasks() {
     }
 }
 
-private fun GenerateProtoTask.collectGeneratedJavaCode() {
-    project.tasks.processTaskResources.apply {
-        from(outputs)
-        duplicatesStrategy = INCLUDE
-    }
-}
+private fun Project.outputFile(name: String): String =
+    outputFile(buildDir.path, name)
 
 private fun GenerateProtoTask.addProtocPlugin() {
     plugins.apply {
-        id(PROTOC_PLUGIN_NAME)
+        id(PROTOC_PLUGIN_NAME) {
+            val path = project.outputFile(CODE_GENERATOR_REQUEST_FILE)
+            val encoded = path.base64Encoded()
+            option(encoded)
+        }
+    }
+}
+
+private fun GenerateProtoTask.collectGeneratedJavaCode() {
+    project.tasks.processTaskResources.apply {
+        from(this@collectGeneratedJavaCode.outputs)
+        duplicatesStrategy = INCLUDE
     }
 }
 
@@ -141,7 +169,7 @@ private fun GenerateProtoTask.grabDescriptorSetFile() {
     if (project.extension.generateDescriptorSet.get()) {
         generateDescriptorSet = true
         descriptorSetOptions.apply {
-            path = "${project.buildDir}/resources/test/$PROTOC_PLUGIN_NAME/$DESCRIPTOR_SET_FILE"
+            path = project.outputFile(DESCRIPTOR_SET_FILE)
             includeSourceInfo = true
             includeImports = true
         }
@@ -150,3 +178,8 @@ private fun GenerateProtoTask.grabDescriptorSetFile() {
 
 private val TaskContainer.processTaskResources: ProcessResources
     get() = named("processTestResources", ProcessResources::class.java).get()
+
+private fun String.base64Encoded(): String {
+    val bytes = encodeToByteArray()
+    return Base64.getEncoder().encodeToString(bytes)
+}
