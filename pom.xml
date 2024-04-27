@@ -24,6 +24,12 @@ all modules and does not describe the project structure per-subproject.
 
 <dependencies>
   <dependency>
+    <groupId>com.google.protobuf</groupId>
+    <artifactId>protobuf-java</artifactId>
+    <version>3.25.1</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
     <groupId>io.spine.tools</groupId>
     <artifactId>spine-plugin-base</artifactId>
     <version>2.0.0-SNAPSHOT.208</version>
@@ -66,9 +72,27 @@ all modules and does not describe the project structure per-subproject.
     <scope>test</scope>
   </dependency>
   <dependency>
+    <groupId>io.spine.tools</groupId>
+    <artifactId>spine-plugin-testlib</artifactId>
+    <version>2.0.0-SNAPSHOT.208</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
     <groupId>org.apiguardian</groupId>
     <artifactId>apiguardian-api</artifactId>
     <version>1.1.2</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-gradle-plugin</artifactId>
+    <version>1.9.23</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.10.0</version>
     <scope>test</scope>
   </dependency>
   <dependency>
@@ -161,11 +185,6 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
-    <artifactId>kotlin-gradle-plugin</artifactId>
-    <version>1.9.23</version>
-  </dependency>
-  <dependency>
-    <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-klib-commonizer-embeddable</artifactId>
     <version>1.8.22</version>
   </dependency>
@@ -173,16 +192,6 @@ all modules and does not describe the project structure per-subproject.
     <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-scripting-compiler-embeddable</artifactId>
     <version>1.8.22</version>
-  </dependency>
-  <dependency>
-    <groupId>org.jetbrains.kotlin</groupId>
-    <artifactId>kotlin-test-junit5</artifactId>
-    <version>1.9.23</version>
-  </dependency>
-  <dependency>
-    <groupId>org.junit.jupiter</groupId>
-    <artifactId>junit-jupiter</artifactId>
-    <version>5.10.0</version>
   </dependency>
 </dependencies>
 
