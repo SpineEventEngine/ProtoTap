@@ -60,8 +60,24 @@ internal class PluginSpec {
     fun `run with default values`() {
         createProject("default-values")
         runBuild()
-        resultDir.resolve("java").countFiles() shouldNotBe 0
+        assertJavaCodeGenerated()
+        assertRequestFileExits()
+    }
+
+    @Test
+    fun `run with proto files under 'tests'`() {
+        createProject("proto-in-test")
+        runBuild()
+        assertJavaCodeGenerated()
+        assertRequestFileExits()
+    }
+
+    private fun assertRequestFileExits() {
         resultDir.resolve(CODE_GENERATOR_REQUEST_FILE).exists() shouldBe true
+    }
+
+    private fun assertJavaCodeGenerated() {
+        resultDir.resolve("java").countFiles() shouldNotBe 0
     }
 
     private fun createProject(resourceDir: String) {

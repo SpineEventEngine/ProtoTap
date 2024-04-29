@@ -24,7 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@file:Suppress("UnstableApiUsage") // `ProcessResources` task we use is marked `@Incubating`.
+@file:Suppress(
+    "UnstableApiUsage" /* `ProcessResources` task we use is marked `@Incubating`. */,
+    "TooManyFunctions" /* Smaller functions are used for better readability. */
+)
 
 package io.spine.tools.prototap.gradle
 
