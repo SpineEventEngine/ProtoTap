@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("UnstableApiUsage") // `ProcessResources` task we use is marked `@Incubating`.
+
 package io.spine.tools.prototap.gradle
 
 import com.google.common.annotations.VisibleForTesting
@@ -39,14 +41,20 @@ import io.spine.tools.prototap.Names.PROTOC_PLUGIN_CLASSIFIER
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_NAME
 import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_FILE
 import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
-import io.spine.tools.prototap.Paths.outputFile
+import io.spine.tools.prototap.Paths.TARGET_DIR
+import io.spine.tools.prototap.Paths.interimDir
+import java.nio.file.Path
 import java.util.*
+import kotlin.io.path.pathString
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.file.DuplicatesStrategy.INCLUDE
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.language.jvm.tasks.ProcessResources
 
+/**
+ * A Gradle plugin which adds ProtoTap plugin to `protoc` and configures the project
+ * tasks for copying generated source code and other related files into test resources.
+ */
 public class Plugin : Plugin<Project> {
 
     override fun apply(project: Project): Unit = with(project) {
@@ -96,8 +104,8 @@ private fun Project.tapProtobuf() {
 private val Project.extension: Extension
     get() = extensions.getByType(Extension::class.java)
 
-private fun Project.setProtocArtifact() {
-    protobufExtension?.protoc {
+private fun Project.setProtocArtifact() = protobufExtension?.run {
+    protoc {
         val artifact = extension.artifact.get()
         if (artifact.isNotBlank()) {
             it.artifact = artifact
@@ -105,23 +113,22 @@ private fun Project.setProtocArtifact() {
     }
 }
 
-private fun Project.createProtocPlugin() {
-    protobufExtension?.plugins {
+private fun Project.createProtocPlugin() = protobufExtension?.run {
+    plugins {
         it.create(PROTOC_PLUGIN_NAME) { locator ->
             locator.artifact = protocPlugin.notation()
         }
     }
 }
 
-private val protoTapVersion: String by lazy {
-    io.spine.tools.prototap.gradle.Plugin.readVersion()
-}
-
+/**
+ * The Maven artifact of the ProtoTap plugin for `protoc`.
+ */
 private val protocPlugin: Artifact by lazy {
     artifact {
         useSpineToolsGroup()
         name = "prototap-protoc-plugin"
-        version = protoTapVersion
+        version = io.spine.tools.prototap.gradle.Plugin.readVersion()
         classifier = PROTOC_PLUGIN_CLASSIFIER
         extension = "jar"
     }
@@ -135,9 +142,12 @@ private fun Project.tuneProtoTasks() {
        breaks the configuration order of the `GenerateProtoTaskCollection`.
        This, in turn, leads to missing generated sources in the `compileJava` task. */
     protobufExtension?.generateProtoTasks {
-        it.ofSourceSet(sourceSetName).forEach { task ->
+        it.ofSourceSet(sourceSetName).configureEach { task ->
+            tasks.processTestResources.run {
+                copySourcesFrom(task.outputBaseDir)
+                copyProtocPluginOutput()
+            }
             task.apply {
-                collectGeneratedJavaCode()
                 addProtocPlugin()
                 grabDescriptorSetFile()
             }
@@ -145,23 +155,40 @@ private fun Project.tuneProtoTasks() {
     }
 }
 
-private fun Project.outputFile(name: String): String =
-    outputFile(buildDir.path, name)
+private val Project.interimDir: Path
+    get() = interimDir(buildDir.path)
+
+private fun Project.interimFile(name: String): String =
+    interimDir.resolve(name).pathString
+
+private val Project.codeGeneratorRequestFile: String
+    get() = interimFile(CODE_GENERATOR_REQUEST_FILE)
+
+private val Project.descriptorSetFile: String
+    get() = interimFile(DESCRIPTOR_SET_FILE)
 
 private fun GenerateProtoTask.addProtocPlugin() {
     plugins.apply {
         id(PROTOC_PLUGIN_NAME) {
-            val path = project.outputFile(CODE_GENERATOR_REQUEST_FILE)
+            val path = project.codeGeneratorRequestFile
             val encoded = path.base64Encoded()
             option(encoded)
         }
     }
 }
 
-private fun GenerateProtoTask.collectGeneratedJavaCode() {
-    project.tasks.processTaskResources.apply {
-        from(this@collectGeneratedJavaCode.outputs)
-        duplicatesStrategy = INCLUDE
+private fun ProcessResources.copySourcesFrom(directory: String) {
+    from(directory) { spec ->
+        // Exclude the empty directory automatically created by
+        // Protobuf Gradle Plugin for our `protoc` plugin.
+        spec.exclude(PROTOC_PLUGIN_NAME)
+        spec.into(TARGET_DIR)
+    }
+}
+
+private fun ProcessResources.copyProtocPluginOutput() {
+    from(project.interimDir) { spec ->
+        spec.into(TARGET_DIR)
     }
 }
 
@@ -169,14 +196,14 @@ private fun GenerateProtoTask.grabDescriptorSetFile() {
     if (project.extension.generateDescriptorSet.get()) {
         generateDescriptorSet = true
         descriptorSetOptions.apply {
-            path = project.outputFile(DESCRIPTOR_SET_FILE)
+            path = project.descriptorSetFile
             includeSourceInfo = true
             includeImports = true
         }
     }
 }
 
-private val TaskContainer.processTaskResources: ProcessResources
+private val TaskContainer.processTestResources: ProcessResources
     get() = named("processTestResources", ProcessResources::class.java).get()
 
 private fun String.base64Encoded(): String {

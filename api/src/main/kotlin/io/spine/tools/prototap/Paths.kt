@@ -34,6 +34,11 @@ import kotlin.io.path.pathString
 public object Paths {
 
     /**
+     * The name of the subdirectory for collecting files.
+     */
+    public const val TARGET_DIR: String = PROTOC_PLUGIN_NAME
+
+    /**
      * The name of the file containing `CodeGeneratorRequest` message obtained
      * by the ProtoTap `protoc` plugins.
      */
@@ -44,20 +49,30 @@ public object Paths {
      */
     public const val DESCRIPTOR_SET_FILE: String = "FileDescriptorSet.binpb"
 
-    public fun outputRoot(buildDir: String): Path =
-        Paths.get("$buildDir/resources/test/")
+    /**
+     * Obtains the path to the intermediate directory for storing some of the intercepted
+     * files before they are copied to the [outputRoot] directory.
+     */
+    public fun interimDir(buildDir: String): Path =
+        Paths.get("$buildDir/$TARGET_DIR")
 
-    public fun pluginOutputDir(buildDir: String): Path =
-        outputRoot(buildDir).resolve(PROTOC_PLUGIN_NAME)
+    /**
+     * Obtains the path to the root directory into which ProtoTap puts all the intercepted files.
+     *
+     * By convention, it is a subdirectory named [TARGET_DIR] placed under
+     * `$buildDir/resources/test` of a Gradle project.
+     */
+    public fun outputRoot(buildDir: String): Path =
+        Paths.get("$buildDir/resources/test/$TARGET_DIR")
 
     /**
      * Obtains a full path to the file with given [shortFileName] under
      * the given [buildDir] of a Gradle project.
      *
-     * By convention, the file is placed under the directory named after [PROTOC_PLUGIN_NAME],
+     * By convention, the file is placed under the [TARGET_DIR] directory,
      * which is created under `$buildDir/resources/test/`.
      */
     public fun outputFile(buildDir: String, shortFileName: String): String =
-        pluginOutputDir(buildDir).resolve(shortFileName).pathString
+        outputRoot(buildDir).resolve(shortFileName).pathString
 }
 

@@ -43,9 +43,10 @@ import kotlin.text.Charsets.UTF_8
 public fun main() {
     val request = CodeGeneratorRequest.parseFrom(System.`in`)
     val requestFile = Path(request.parameter.decodeBase64())
-    requestFile.toFile()
-        .parentFile
-        .mkdirs()
+
+    val targetDir = requestFile.toFile().parentFile
+    targetDir.mkdirs()
+
     requestFile.writeBytes(request.toByteArray(), CREATE, TRUNCATE_EXISTING)
 
     val emptyResponse = CodeGeneratorResponse.getDefaultInstance()
