@@ -98,7 +98,7 @@ gradlePlugin {
             implementationClass = "io.spine.tools.prototap.gradle.Plugin"
             displayName = "ProtoTap Gradle Plugin"
             description = "Obtains generated code and related data from Protobuf compiler"
-            tags.set(listOf("protobuf", "protoc", "codegen", "gradle", "plugin"))
+            tags.set(listOf("protobuf", "protoc", "prototap", "codegen", "gradle", "plugin"))
         }
     }
 }
@@ -126,6 +126,7 @@ project.afterEvaluate {
         // Do not add the prefix for the publication which produces
         // the `io.spine.prototap.gradle.plugin` marker.
 
+        // Add the prefix to the `artifactId` of the plugin dependency used in the marker.
         publications.withType<MavenPublication>().configureEach {
             if (name.endsWith("PluginMarkerMaven")) {
                 pom.withXml {
