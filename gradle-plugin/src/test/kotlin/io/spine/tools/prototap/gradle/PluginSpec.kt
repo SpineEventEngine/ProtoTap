@@ -82,6 +82,14 @@ internal class PluginSpec {
         assertDescriptorSetFileExits()
     }
 
+    @Test
+    fun `work as a 'classpath' dependency of 'buildscript'`() {
+        createProject("via-classpath")
+        runBuild()
+        assertJavaCodeGenerated()
+        assertRequestFileExits()
+    }
+
     private fun assertJavaCodeGenerated() {
         val javaDir = resultDir.resolve("java")
         javaDir.countFiles() shouldNotBe 0
