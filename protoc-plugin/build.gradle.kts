@@ -42,7 +42,10 @@ tasks.jar {
             else -> zipTree(it)
         }
     })
-
+    exclude(
+        // Protobuf files.
+        "google/**",
+    )
     archiveClassifier.set("exe")
     duplicatesStrategy = INCLUDE
 }

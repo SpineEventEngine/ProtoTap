@@ -48,7 +48,6 @@ dependencies {
 
     api(project(":api"))
     implementation(Spine.pluginBase)
-
     implementation(Kotlin.gradlePluginApi)
 }
 
@@ -87,6 +86,53 @@ java {
 
 val shadowJar by tasks.getting(ShadowJar::class) {
     archiveClassifier.set("")
+    exclude(
+        "org/checkerframework/**",
+        "org/jboss/**",
+
+        // Exclude license files that cause or may cause issues with LicenseReport.
+        // We analyze these files when building artifacts we depend on.
+        "about_files/**",
+
+        "ant_tasks/**", // `resource-ant.jar` is of no use here.
+        
+        // Protobuf files.
+        "google/**",
+        "spine/**",
+        "src/**",
+
+        // Java source code files of the package `org.osgi`.
+        "OSGI-OPT/**",
+
+        // Unnecessary settings from the Eclipse Platform.
+        "OSGI-INF/**",
+
+        "META-INF/com.android.tools/**",
+        "META-INF/maven/**",
+        "META-INF/native-image/**",
+        "META-INF/proguard/**",
+        "META-INF/services/org.jboss.forge.roaster.*.*",
+        "META-INF/eclipse.inf",
+
+        // Checker Framework license.
+        "META-INF/LICENSE.txt",
+
+        // OSGi notices
+        "META-INF/NOTICE",
+
+        // Unnecessary stuff from the Eclipse Platform and other dependencies.
+        ".api_description",
+        ".options",
+        "_base_main_unspecified.desc",
+        "_base_main_unspecified.desc",
+        "about.html",
+        "profile.plist",
+        "*.profile",
+        "jdtCompilerAdapter.jar",
+        "plugin.properties",
+        "plugin.xml",
+        "systembundle.properties",
+    )
 }
 
 gradlePlugin {
