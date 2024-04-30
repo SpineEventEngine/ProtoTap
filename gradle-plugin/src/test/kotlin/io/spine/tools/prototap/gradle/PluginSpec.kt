@@ -32,6 +32,7 @@ import io.spine.tools.gradle.task.BaseTaskName.build
 import io.spine.tools.gradle.testing.GradleProject
 import io.spine.tools.prototap.Names.GRADLE_PLUGIN_ID
 import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_FILE
+import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
 import io.spine.tools.prototap.Paths.outputRoot
 import java.io.File
 import java.nio.file.Path
@@ -72,12 +73,34 @@ internal class PluginSpec {
         assertRequestFileExits()
     }
 
+    @Test
+    fun `run with 'prototap' settings`() {
+        createProject("with-settings")
+        runBuild()
+        assertJavaCodeGenerated()
+        assertRequestFileExits()
+        assertDescriptorSetFileExits()
+    }
+
+    private fun assertJavaCodeGenerated() {
+        val javaDir = resultDir.resolve("java")
+        javaDir.countFiles() shouldNotBe 0
+        val packageDir = javaDir.resolve("io/spine/given/domain/gas/")
+        packageDir.run {
+            exists() shouldBe true
+            // Check some Java files too.
+            resolve("Pipe.java").exists() shouldBe true
+            resolve("CompressorStation.java").exists() shouldBe true
+            resolve("LngStorage.java").exists() shouldBe true
+        }
+    }
+
     private fun assertRequestFileExits() {
         resultDir.resolve(CODE_GENERATOR_REQUEST_FILE).exists() shouldBe true
     }
 
-    private fun assertJavaCodeGenerated() {
-        resultDir.resolve("java").countFiles() shouldNotBe 0
+    private fun assertDescriptorSetFileExits() {
+        resultDir.resolve(DESCRIPTOR_SET_FILE).exists() shouldBe true
     }
 
     private fun createProject(resourceDir: String) {

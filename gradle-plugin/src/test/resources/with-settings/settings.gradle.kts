@@ -24,34 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import com.google.protobuf.gradle.protobuf
-import io.spine.internal.dependency.GoogleApis
-import io.spine.internal.dependency.Protobuf
-import io.spine.internal.gradle.standardToSpineSdk
-
-buildscript {
-    standardSpineSdkRepositories()
-}
-
-plugins {
-    java
-    id("com.google.protobuf")
-    id("@PROTOTAP_PLUGIN_ID@") version "@PROTOTAP_VERSION@"
-}
-
-repositories {
-    mavenLocal()
-    standardToSpineSdk()
-}
-
-protobuf {
-    protoc {
-        artifact = io.spine.internal.dependency.Protobuf.compiler
+pluginManagement {
+    repositories {
+        mavenLocal()
     }
-}
-
-dependencies {
-    testImplementation(Protobuf.javaLib)
-    // For `google/type/` proto types used in stub domains.
-    testImplementation(GoogleApis.commonProtos)
 }

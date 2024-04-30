@@ -47,7 +47,7 @@ import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
 import io.spine.tools.prototap.Paths.TARGET_DIR
 import io.spine.tools.prototap.Paths.interimDir
 import java.nio.file.Path
-import java.util.*
+import java.util.Base64
 import kotlin.io.path.pathString
 import org.gradle.api.Plugin
 import org.gradle.api.Project

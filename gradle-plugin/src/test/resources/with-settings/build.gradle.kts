@@ -26,6 +26,7 @@
 
 import com.google.protobuf.gradle.protobuf
 import io.spine.internal.dependency.GoogleApis
+import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Protobuf
 import io.spine.internal.gradle.standardToSpineSdk
 
@@ -54,4 +55,36 @@ dependencies {
     testImplementation(Protobuf.javaLib)
     // For `google/type/` proto types used in stub domains.
     testImplementation(GoogleApis.commonProtos)
+}
+
+
+@Suppress(
+    "UnstableApiUsage" /* testing suites feature */
+)
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter(JUnit.version)
+            dependencies {
+                implementation(Protobuf.javaLib)
+                implementation(GoogleApis.commonProtos)
+            }
+        }
+
+        val functionalTest by registering(JvmTestSuite::class) {
+            useJUnitJupiter(JUnit.version)
+            dependencies {
+                implementation(Protobuf.javaLib)
+                implementation(GoogleApis.commonProtos)
+            }
+        }
+    }
+}
+
+val functionalTest: SourceSet by project.sourceSets.getting
+
+prototap {
+    artifact.set(io.spine.internal.dependency.Protobuf.compiler)
+    sourceSet.set(functionalTest)
+    generateDescriptorSet.set(true)
 }

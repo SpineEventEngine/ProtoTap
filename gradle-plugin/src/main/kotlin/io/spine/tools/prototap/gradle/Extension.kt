@@ -36,11 +36,35 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.SourceSet
 import org.gradle.kotlin.dsl.property
 
+/**
+ * An extension for a Gradle project which provides options for capturing Protobuf output.
+ */
 public class Extension(project: Project) {
 
+    /**
+     * The `protoc` artifact to be used during for processing proto files.
+     *
+     * The default value is empty string, which means that ProtoTap assumes that it
+     * is used in a project with Protobuf Gradle Plugin fully configured.
+     *
+     * This property can be used in rare cases when the artifact is not specified directly
+     * via the [artifact][com.google.protobuf.gradle.ExecutableLocator.setArtifact] property in
+     * the [protobuf/protoc][com.google.protobuf.gradle.ProtobufExtension.protoc] block.
+     */
     public val artifact: Property<String> = project.objects.property<String>()
         .convention("")
 
+    /**
+     * The source set with proto files for installing the tap.
+     *
+     * If not specified the Gradle plugin would look for
+     * the [testFixtures][DEFAULT_SOURCE_SET_NAME] source set.
+     *
+     * If it's not available, the plugin would look for
+     * the [test][FALLBACK_SOURCE_SET_NAME] source set.
+     *
+     * If such a source set is not available either, a build time error will occur.
+     */
     public val sourceSet: Property<SourceSet> = with(project) {
         objects.property<SourceSet>().convention(
             provider {
@@ -49,6 +73,11 @@ public class Extension(project: Project) {
         )
     }
 
+    /**
+     * Tells if descriptor set file should be captured during the code generation process.
+     *
+     * The default value is `false`.
+     */
     public val generateDescriptorSet: Property<Boolean> =
         project.objects.property<Boolean>().convention(false)
 }

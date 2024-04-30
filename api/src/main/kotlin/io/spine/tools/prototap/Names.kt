@@ -39,7 +39,7 @@ public object Names {
     /**
      * The name of a Gradle project extension added by ProtoTap Gradle Plugin.
      */
-    public const val GRADLE_EXTENSION_NAME: String = "protoTap"
+    public const val GRADLE_EXTENSION_NAME: String = "prototap"
 
     /**
      * The name ProtoTap uses when passing itself to `protoc` compiler.
@@ -47,22 +47,23 @@ public object Names {
     public const val PROTOC_PLUGIN_NAME: String = "prototap"
 
     /**
-     * The name of the source set which is used by default for tapping Protobuf compiler.
+     * The name of the `testFixtures` source set used by default for
+     * tapping Protobuf compiler.
      *
-     * This constant is used if the `sourceSet` property of the `protoTap` project extension
+     * This constant is used if the `sourceSet` property of
+     * the [prototap][GRADLE_EXTENSION_NAME] project extension
      * added by the ProtoTap Gradle Plugin is not specified.
      *
      * If a project does not apply the `java-test-fixtures` Gradle plugin, then
-     * the [`test`][FALLBACK_SOURCE_SET_NAME] source set conventionally will be used.
+     * the [test][FALLBACK_SOURCE_SET_NAME] source set conventionally will be used.
      */
     public const val DEFAULT_SOURCE_SET_NAME: String = "testFixtures"
 
     /**
-     * The name of the source set to be used for tapping Protobuf compiler, if
-     * the project does not have a source set with the [DEFAULT_SOURCE_SET_NAME].
+     * The name of the `test` source set which is used for tapping Protobuf compiler, if
+     * the project does not have the [testFixtures][DEFAULT_SOURCE_SET_NAME] source set.
      *
-     * If the project does not have the [`test`][FALLBACK_SOURCE_SET_NAME] source
-     * set either, a build time error will occur.
+     * If the project does not have the `test` source set either, a build time error will occur.
      */
     public const val FALLBACK_SOURCE_SET_NAME: String = "test"
 
