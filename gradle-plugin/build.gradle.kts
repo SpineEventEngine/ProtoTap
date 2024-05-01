@@ -135,6 +135,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     )
 }
 
+@Suppress("UnstableApiUsage") // `@Incubating` properties of `gradlePlugin`.
 gradlePlugin {
     website.set("https://spine.io")
     vcsUrl.set("https://github.com/SpineEventEngine/ProtoTap")
