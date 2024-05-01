@@ -124,8 +124,8 @@ internal class PluginSpec {
                  2) Under Windows it may cause this issue to occur:
                     https://github.com/gradle/native-platform/issues/274
                After finishing the debug, please comment out this call again. */
-            //.withLoggingLevel(LogLevel.INFO)
             //.enableRunnerDebug()
+            //.withLoggingLevel(LogLevel.INFO)
             .copyBuildSrc()
         project = builder.create()
         (project.runner as DefaultGradleRunner).withJvmArguments(
