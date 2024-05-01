@@ -81,4 +81,3 @@ public object Paths {
     public fun outputFile(buildDir: String, shortFileName: String): String =
         outputRoot(buildDir).resolve(shortFileName).pathString
 }
-
