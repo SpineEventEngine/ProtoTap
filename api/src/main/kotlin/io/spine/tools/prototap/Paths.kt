@@ -31,6 +31,12 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.io.path.pathString
 
+/**
+ * Constants and utility functions for calculating directory and file names
+ * used by ProtoTap Gradle and `protoc` plugins.
+ *
+ * This object may also be useful for users of ProtoTap to obtain its output.
+ */
 public object Paths {
 
     /**
