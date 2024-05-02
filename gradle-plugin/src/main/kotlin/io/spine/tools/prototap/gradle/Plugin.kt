@@ -128,7 +128,6 @@ private val protocPlugin: Artifact by lazy {
 }
 
 private fun Project.tuneProtoTasks() {
-
     /* The below block adds a configuration action for the `GenerateProtoTaskCollection`.
        We cannot do it like `generateProtoTasks.all().forEach { ... }` because it
        breaks the configuration order of the `GenerateProtoTaskCollection`.
