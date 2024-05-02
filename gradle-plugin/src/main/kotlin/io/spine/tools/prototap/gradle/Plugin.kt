@@ -63,7 +63,8 @@ public class Plugin : Plugin<Project> {
     override fun apply(project: Project): Unit = with(project) {
         createExtension()
         pluginManager.withPlugin(ProtobufDependencies.gradlePlugin.id) {
-            tapProtobuf()
+            createProtocPlugin()
+            tuneProtoTasks()
         }
     }
 
@@ -128,13 +129,13 @@ private val protocPlugin: Artifact by lazy {
 }
 
 private fun Project.tuneProtoTasks() {
-    val sourceSetName = extension.sourceSet.get().name
 
     /* The below block adds a configuration action for the `GenerateProtoTaskCollection`.
        We cannot do it like `generateProtoTasks.all().forEach { ... }` because it
        breaks the configuration order of the `GenerateProtoTaskCollection`.
        This, in turn, leads to missing generated sources in the `compileJava` task. */
     protobufExtension?.generateProtoTasks {
+        val sourceSetName = extension.sourceSet.get().name
         it.ofSourceSet(sourceSetName).configureEach { task ->
             tasks.processTestResources.run {
                 copySourcesFrom(task.outputBaseDir)
