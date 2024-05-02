@@ -63,8 +63,7 @@ public class Plugin : Plugin<Project> {
     override fun apply(project: Project): Unit = with(project) {
         createExtension()
         pluginManager.withPlugin(ProtobufDependencies.gradlePlugin.id) {
-            createProtocPlugin()
-            tuneProtoTasks()
+            tapProtobuf()
         }
     }
 
