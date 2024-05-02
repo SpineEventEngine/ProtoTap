@@ -84,7 +84,6 @@ testing {
 val functionalTest: SourceSet by project.sourceSets.getting
 
 prototap {
-    artifact.set(io.spine.internal.dependency.Protobuf.compiler)
     sourceSet.set(functionalTest)
     generateDescriptorSet.set(true)
 }
