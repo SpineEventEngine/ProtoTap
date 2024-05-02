@@ -70,8 +70,8 @@ plugins {
     id("io.spine.prototap") version "$version"
 }
 ```
-The above snippet assumes that the plugin with the ID `"com.google.protobuf"` is already added at
-some level to your project.
+The above snippet assumes that the plugin with the ID `"com.google.protobuf"` is already
+added and configured in your project.
 
 > [!TIP]
 > For the latest ProtoTap version please see [`version.gradle.kts`](version.gradle.kts).
@@ -83,14 +83,10 @@ You can tune ProtoTap by using the following DSL:
 
 ```kotlin
 prototap {
-    artifact.set("com.google.protobuf:protoc:3.25.1")
     sourceSet.set(functionalTest)
     generateDescriptorSet.set(true)
 }
 ```
-The `artifact` property is a convenience shortcut for specifying the `protoc` artifact in case
-your project does not have explicit `protobuf` block.
-
 The `sourceSet` property is for specifying a source set with the proto files of interest, other
 than `testFixtures` or `test`.
 

@@ -96,7 +96,6 @@ private fun Project.createExtension(): Extension {
  * Protobuf Gradle Plugin.
  */
 private fun Project.tapProtobuf() {
-    setProtocArtifact()
     createProtocPlugin()
     tuneProtoTasks()
 }
@@ -106,15 +105,6 @@ private fun Project.tapProtobuf() {
  */
 private val Project.extension: Extension
     get() = extensions.getByType(Extension::class.java)
-
-private fun Project.setProtocArtifact() = protobufExtension?.run {
-    protoc {
-        val artifact = extension.artifact.get()
-        if (artifact.isNotBlank()) {
-            it.artifact = artifact
-        }
-    }
-}
 
 private fun Project.createProtocPlugin() = protobufExtension?.run {
     plugins {

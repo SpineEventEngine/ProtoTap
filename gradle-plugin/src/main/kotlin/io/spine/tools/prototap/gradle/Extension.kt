@@ -42,19 +42,6 @@ import org.gradle.kotlin.dsl.property
 public class Extension(project: Project) {
 
     /**
-     * The `protoc` artifact to be used during for processing proto files.
-     *
-     * The default value is empty string, which means that ProtoTap assumes that it
-     * is used in a project with Protobuf Gradle Plugin fully configured.
-     *
-     * This property can be used in rare cases when the artifact is not specified directly
-     * via the [artifact][com.google.protobuf.gradle.ExecutableLocator.setArtifact] property in
-     * the [protobuf/protoc][com.google.protobuf.gradle.ProtobufExtension.protoc] block.
-     */
-    public val artifact: Property<String> = project.objects.property<String>()
-        .convention("")
-
-    /**
      * The source set with proto files for installing the tap.
      *
      * If not specified the Gradle plugin would look for
