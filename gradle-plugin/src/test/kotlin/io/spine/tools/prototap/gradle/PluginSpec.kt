@@ -90,6 +90,14 @@ internal class PluginSpec {
         assertRequestFileExits()
     }
 
+    @Test
+    fun `run when plugin is added before 'java-test-fixtures'`() {
+        createProject("before-test-fixtures")
+        runBuild()
+        assertJavaCodeGenerated()
+        assertRequestFileExits()
+    }
+
     private fun assertJavaCodeGenerated() {
         val javaDir = resultDir.resolve("java")
         javaDir.countFiles() shouldNotBe 0
@@ -124,7 +132,7 @@ internal class PluginSpec {
                  2) Under Windows it may cause this issue to occur:
                     https://github.com/gradle/native-platform/issues/274
                After finishing the debug, please comment out this call again. */
-            //.enableRunnerDebug()
+            .enableRunnerDebug()
             //.withLoggingLevel(LogLevel.INFO)
             .copyBuildSrc()
         project = builder.create()
