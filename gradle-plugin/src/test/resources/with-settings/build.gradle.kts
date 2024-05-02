@@ -72,3 +72,11 @@ prototap {
     sourceSet.set(functionalTest)
     generateDescriptorSet.set(true)
 }
+
+// Force Gradle to execute the `generateFunctionalTestProto` task, which otherwise
+// "hang in the air" without dependencies because we don't have `main` and `test` source sets.
+val generateFunctionalTestProto by tasks.getting
+tasks.check {
+    dependsOn(generateFunctionalTestProto)
+}
+
