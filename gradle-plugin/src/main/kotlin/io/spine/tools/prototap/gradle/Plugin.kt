@@ -127,14 +127,23 @@ private val protocPlugin: Artifact by lazy {
     }
 }
 
+/**
+ * Configures [GenerateProtoTask] for the source set specified in the [Extension.sourceSet].
+ *
+ * The task is configured to in the following ways:
+ *   1. As an input for `processTaskResources`.
+ *      This way all the generated source code becomes resources for the `test` source set.
+ *   2. Adds ProtoTap `protoc` plugin.
+ *   3. Instructs to generate descriptor set file, if [Extension.generateDescriptorSet]
+ *      property is set to `true`.
+ */
 private fun Project.tuneProtoTasks() {
-    val sourceSetName = extension.sourceSet.get().name
-
     /* The below block adds a configuration action for the `GenerateProtoTaskCollection`.
        We cannot do it like `generateProtoTasks.all().forEach { ... }` because it
        breaks the configuration order of the `GenerateProtoTaskCollection`.
        This, in turn, leads to missing generated sources in the `compileJava` task. */
     protobufExtension?.generateProtoTasks {
+        val sourceSetName = extension.sourceSet.get().name
         it.ofSourceSet(sourceSetName).configureEach { task ->
             tasks.processTestResources.run {
                 copySourcesFrom(task.outputBaseDir)

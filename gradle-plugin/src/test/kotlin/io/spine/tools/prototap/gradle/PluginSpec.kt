@@ -90,6 +90,14 @@ internal class PluginSpec {
         assertRequestFileExits()
     }
 
+    @Test
+    fun `run when plugin is added before 'java-test-fixtures'`() {
+        createProject("before-test-fixtures")
+        runBuild()
+        assertJavaCodeGenerated()
+        assertRequestFileExits()
+    }
+
     private fun assertJavaCodeGenerated() {
         val javaDir = resultDir.resolve("java")
         javaDir.countFiles() shouldNotBe 0

@@ -25,9 +25,8 @@
  */
 
 import com.google.protobuf.gradle.protobuf
-import io.spine.internal.dependency.GoogleApis
-import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Protobuf
+import io.spine.internal.dependency.GoogleApis
 import io.spine.internal.gradle.standardToSpineSdk
 
 buildscript {
@@ -38,6 +37,7 @@ plugins {
     java
     id("com.google.protobuf")
     id("@PROTOTAP_PLUGIN_ID@") version "@PROTOTAP_VERSION@"
+    `java-test-fixtures`
 }
 
 repositories {
@@ -51,31 +51,8 @@ protobuf {
     }
 }
 
-@Suppress(
-    "UnstableApiUsage" /* testing suites feature */
-)
-testing {
-    suites {
-        val functionalTest by registering(JvmTestSuite::class) {
-            useJUnitJupiter(JUnit.version)
-            dependencies {
-                implementation(Protobuf.javaLib)
-                implementation(GoogleApis.commonProtos)
-            }
-        }
-    }
-}
-
-val functionalTest: SourceSet by project.sourceSets.getting
-
-prototap {
-    sourceSet.set(functionalTest)
-    generateDescriptorSet.set(true)
-}
-
-// Force Gradle to execute the `generateFunctionalTestProto` task, which otherwise
-// "hang in the air" without dependencies because we don't have `main` and `test` source sets.
-val generateFunctionalTestProto by tasks.getting
-tasks.check {
-    dependsOn(generateFunctionalTestProto)
+dependencies {
+    testFixturesImplementation(Protobuf.javaLib)
+    // For `google/type/` proto types used in stub domains.
+    testFixturesImplementation(GoogleApis.commonProtos)
 }

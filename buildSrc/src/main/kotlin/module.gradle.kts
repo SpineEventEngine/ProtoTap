@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,8 +90,6 @@ fun Module.addDependencies() {
         compileOnlyApi(CheckerFramework.annotations)
         ErrorProne.annotations.forEach { compileOnlyApi(it) }
 
-//        implementation(Guava.lib)
-
         testImplementation(Guava.testLib)
         JUnit.api.forEach { testImplementation(it) }
         Truth.libs.forEach { testImplementation(it) }
@@ -165,5 +163,3 @@ fun Module.configureGitHubPages() {
         rootFolder.set(rootDir)
     }
 }
-
-
