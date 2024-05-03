@@ -79,4 +79,3 @@ val generateFunctionalTestProto by tasks.getting
 tasks.check {
     dependsOn(generateFunctionalTestProto)
 }
-
