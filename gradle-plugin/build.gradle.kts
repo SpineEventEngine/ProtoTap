@@ -144,7 +144,7 @@ gradlePlugin {
             id = "io.spine.prototap"
             implementationClass = "io.spine.tools.prototap.gradle.Plugin"
             displayName = "ProtoTap Gradle Plugin"
-            description = "Obtains generated code and related data from Protobuf compiler"
+            description = "Obtains generated code and related data from Protobuf compiler."
             tags.set(listOf("protobuf", "protoc", "prototap", "codegen"))
         }
     }
