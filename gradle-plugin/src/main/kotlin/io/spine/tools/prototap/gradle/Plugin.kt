@@ -148,6 +148,7 @@ private fun Project.tuneProtoTasks() {
             tasks.processTestResources.run {
                 copySourcesFrom(task.outputBaseDir)
                 copyProtocPluginOutput()
+                dependsOn(task)
             }
             task.apply {
                 addProtocPlugin()
