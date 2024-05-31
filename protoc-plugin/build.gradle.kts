@@ -25,10 +25,13 @@
 */
 
 import io.spine.internal.dependency.Protobuf
+import io.spine.internal.dependency.Spine
 import org.gradle.api.file.DuplicatesStrategy.INCLUDE
 
 dependencies {
     implementation(Protobuf.javaLib)
+    implementation(Spine.base)
+    testImplementation(Spine.testlib)
 }
 
 tasks.jar {
