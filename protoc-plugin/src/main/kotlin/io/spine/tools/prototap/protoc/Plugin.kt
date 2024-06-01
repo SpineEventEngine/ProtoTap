@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -30,14 +30,8 @@ package io.spine.tools.prototap.protoc
 
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse
-import io.spine.io.replaceExtension
-import io.spine.type.toJson
-import java.nio.file.StandardOpenOption.CREATE
-import java.nio.file.StandardOpenOption.TRUNCATE_EXISTING
-import java.util.Base64
-import kotlin.io.path.Path
-import kotlin.io.path.writeBytes
-import kotlin.io.path.writeText
+import io.spine.code.proto.CodeGeneratorRequestWriter
+import java.util.*
 import kotlin.text.Charsets.UTF_8
 
 /**
@@ -51,23 +45,9 @@ import kotlin.text.Charsets.UTF_8
  * [protocol](https://protobuf.dev/reference/cpp/api-docs/google.protobuf.compiler.plugin.pb/).
  */
 public fun main() {
-    val request = CodeGeneratorRequest.parseFrom(System.`in`)
-    val requestFile = Path(request.parameter.decodeBase64())
-
-    val targetDir = requestFile.toFile().parentFile
-    targetDir.mkdirs()
-
-    requestFile.writeBytes(request.toByteArray(), CREATE, TRUNCATE_EXISTING)
-
-    val requestFileInJson = requestFile.replaceExtension("pb.json")
-    val json = request.toJson()
-    requestFileInJson.writeText(json)
-
+    val writer = CodeGeneratorRequestWriter(System.`in`)
+    writer.writeBinary()
+    writer.writeJson()
     val emptyResponse = CodeGeneratorResponse.getDefaultInstance()
     emptyResponse.writeTo(System.out)
-}
-
-private fun String.decodeBase64(): String {
-    val bytes = Base64.getDecoder().decode(this)
-    return String(bytes, UTF_8)
 }
