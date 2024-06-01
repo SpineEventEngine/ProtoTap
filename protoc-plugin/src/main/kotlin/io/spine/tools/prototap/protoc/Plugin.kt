@@ -31,14 +31,12 @@ package io.spine.tools.prototap.protoc
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse
 import io.spine.code.proto.CodeGeneratorRequestWriter
-import java.util.*
-import kotlin.text.Charsets.UTF_8
 
 /**
  * Stores received `CodeGeneratorRequest` message to the file the name of which is passed as
  * the value of the [parameter][CodeGeneratorRequest.getParameter] property of the request.
  *
- * The name of the file is [Base64] encoded.
+ * The name of the file is [Base64][java.util.Base64] encoded.
  *
  * The function returns empty [CodeGeneratorRequest] written to [System.out]
  * according to the `protoc` plugin
