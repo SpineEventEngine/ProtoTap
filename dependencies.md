@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine.tools:prototap-api:0.8.6`
+# Dependencies of `io.spine.tools:prototap-api:0.8.7`
 
 ## Runtime
 1.  **Group** : org.jetbrains. **Name** : annotations. **Version** : 24.0.1.
@@ -490,12 +490,12 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Fri May 31 16:44:34 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Sat Jun 01 15:14:28 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:prototap-gradle-plugin:0.8.6`
+# Dependencies of `io.spine.tools:prototap-gradle-plugin:0.8.7`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1284,12 +1284,12 @@ This report was generated on **Fri May 31 16:44:34 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Fri May 31 16:44:34 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Sat Jun 01 15:14:28 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:prototap-protoc-plugin:0.8.6`
+# Dependencies of `io.spine.tools:prototap-protoc-plugin:0.8.7`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1910,4 +1910,4 @@ This report was generated on **Fri May 31 16:44:34 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Fri May 31 16:44:35 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Sat Jun 01 15:14:28 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
