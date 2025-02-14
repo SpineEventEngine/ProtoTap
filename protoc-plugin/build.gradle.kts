@@ -25,13 +25,14 @@
  */
 
 import io.spine.dependency.lib.Protobuf
-import io.spine.dependency.local.Spine
+import io.spine.dependency.local.Base
+import io.spine.dependency.local.TestLib
 import org.gradle.api.file.DuplicatesStrategy.INCLUDE
 
 dependencies {
     implementation(Protobuf.javaLib)
-    implementation(Spine.base)?.because("`MessageOrBuilder.toJson()` is needed.")
-    testImplementation(Spine.testlib)
+    implementation(Base.lib)?.because("`MessageOrBuilder.toJson()` is needed.")
+    testImplementation(TestLib.lib)
 }
 
 tasks.jar {

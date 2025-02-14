@@ -25,10 +25,10 @@
  */
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import io.spine.dependency.test.JUnit
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.lib.Protobuf
-import io.spine.dependency.local.Spine
+import io.spine.dependency.local.ToolBase
+import io.spine.dependency.test.JUnit
 import io.spine.gradle.isSnapshot
 import io.spine.gradle.publish.SpinePublishing
 
@@ -47,7 +47,7 @@ dependencies {
     compileOnly(Protobuf.GradlePlugin.lib)
 
     api(project(":api"))
-    implementation(Spine.pluginBase)
+    implementation(ToolBase.pluginBase)
     implementation(Kotlin.gradlePluginApi)
 }
 
@@ -62,7 +62,7 @@ testing {
                 implementation(Kotlin.gradlePluginLib)
                 implementation(gradleKotlinDsl())
                 implementation(Protobuf.GradlePlugin.lib)
-                implementation(Spine.pluginTestlib)
+                implementation(ToolBase.pluginTestlib)
             }
         }
     }
