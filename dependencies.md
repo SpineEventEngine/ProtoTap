@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine.tools:prototap-api:0.8.7`
+# Dependencies of `io.spine.tools:prototap-api:0.9.0`
 
 ## Runtime
 1.  **Group** : org.jetbrains. **Name** : annotations. **Version** : 24.0.1.
@@ -317,17 +317,17 @@
      * **Project URL:** [http://hamcrest.org/JavaHamcrest/](http://hamcrest.org/JavaHamcrest/)
      * **License:** [BSD License 3](http://opensource.org/licenses/BSD-3-Clause)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.agent. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.agent. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.ant. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.ant. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.core. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.core. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.report. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.report. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
 1.  **Group** : org.javassist. **Name** : javassist. **Version** : 3.28.0-GA.
      * **Project URL:** [http://www.javassist.org/](http://www.javassist.org/)
@@ -490,12 +490,12 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Fri Feb 14 14:46:30 WET 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Fri Feb 14 16:03:56 WET 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:prototap-gradle-plugin:0.8.7`
+# Dependencies of `io.spine.tools:prototap-gradle-plugin:0.9.0`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -983,17 +983,17 @@ This report was generated on **Fri Feb 14 14:46:30 WET 2025** using [Gradle-Lice
      * **Project URL:** [http://hamcrest.org/JavaHamcrest/](http://hamcrest.org/JavaHamcrest/)
      * **License:** [BSD License 3](http://opensource.org/licenses/BSD-3-Clause)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.agent. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.agent. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.ant. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.ant. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.core. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.core. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.report. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.report. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
 1.  **Group** : org.javassist. **Name** : javassist. **Version** : 3.28.0-GA.
      * **Project URL:** [http://www.javassist.org/](http://www.javassist.org/)
@@ -1241,6 +1241,10 @@ This report was generated on **Fri Feb 14 14:46:30 WET 2025** using [Gradle-Lice
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
 
+1.  **Group** : org.junit.platform. **Name** : junit-platform-launcher. **Version** : 1.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.opentest4j. **Name** : opentest4j. **Version** : 1.3.0.
      * **Project URL:** [https://github.com/ota4j-team/opentest4j](https://github.com/ota4j-team/opentest4j)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1280,12 +1284,12 @@ This report was generated on **Fri Feb 14 14:46:30 WET 2025** using [Gradle-Lice
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Fri Feb 14 14:46:32 WET 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Fri Feb 14 16:03:56 WET 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:prototap-protoc-plugin:0.8.7`
+# Dependencies of `io.spine.tools:prototap-protoc-plugin:0.9.0`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1709,17 +1713,17 @@ This report was generated on **Fri Feb 14 14:46:32 WET 2025** using [Gradle-Lice
      * **Project URL:** [http://hamcrest.org/JavaHamcrest/](http://hamcrest.org/JavaHamcrest/)
      * **License:** [BSD License 3](http://opensource.org/licenses/BSD-3-Clause)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.agent. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.agent. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.ant. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.ant. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.core. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.core. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
-1.  **Group** : org.jacoco. **Name** : org.jacoco.report. **Version** : 0.8.8.
-     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+1.  **Group** : org.jacoco. **Name** : org.jacoco.report. **Version** : 0.8.12.
+     * **License:** [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/)
 
 1.  **Group** : org.javassist. **Name** : javassist. **Version** : 3.28.0-GA.
      * **Project URL:** [http://www.javassist.org/](http://www.javassist.org/)
@@ -1902,4 +1906,4 @@ This report was generated on **Fri Feb 14 14:46:32 WET 2025** using [Gradle-Lice
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Fri Feb 14 14:46:32 WET 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Fri Feb 14 16:03:57 WET 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
