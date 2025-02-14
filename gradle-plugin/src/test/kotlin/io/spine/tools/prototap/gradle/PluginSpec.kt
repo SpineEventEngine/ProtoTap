@@ -1,11 +1,11 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -33,6 +33,7 @@ import io.spine.tools.gradle.testing.GradleProject
 import io.spine.tools.prototap.Names.GRADLE_PLUGIN_ID
 import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_FILE
 import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
+import io.spine.tools.prototap.Paths.COMPILED_PROTOS_FILE
 import io.spine.tools.prototap.Paths.outputRoot
 import java.io.File
 import java.nio.file.Path
@@ -63,6 +64,7 @@ internal class PluginSpec {
         runBuild()
         assertJavaCodeGenerated()
         assertRequestFileExits()
+        assertCompiledProtosFileExists()
     }
 
     @Test
@@ -71,6 +73,7 @@ internal class PluginSpec {
         runBuild()
         assertJavaCodeGenerated()
         assertRequestFileExits()
+        assertCompiledProtosFileExists()
     }
 
     @Test
@@ -79,6 +82,7 @@ internal class PluginSpec {
         runBuild()
         assertJavaCodeGenerated()
         assertRequestFileExits()
+        assertCompiledProtosFileExists()
         assertDescriptorSetFileExits()
     }
 
@@ -88,6 +92,7 @@ internal class PluginSpec {
         runBuild()
         assertJavaCodeGenerated()
         assertRequestFileExits()
+        assertCompiledProtosFileExists()
     }
 
     @Test
@@ -96,6 +101,7 @@ internal class PluginSpec {
         runBuild()
         assertJavaCodeGenerated()
         assertRequestFileExits()
+        assertCompiledProtosFileExists()
     }
 
     private fun assertJavaCodeGenerated() {
@@ -117,6 +123,10 @@ internal class PluginSpec {
 
     private fun assertDescriptorSetFileExits() {
         resultDir.resolve(DESCRIPTOR_SET_FILE).exists() shouldBe true
+    }
+
+    private fun assertCompiledProtosFileExists() {
+        resultDir.resolve(COMPILED_PROTOS_FILE).exists() shouldBe true
     }
 
     private fun createProject(resourceDir: String) {

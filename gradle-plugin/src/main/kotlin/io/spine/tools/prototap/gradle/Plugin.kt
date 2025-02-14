@@ -1,11 +1,11 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -43,11 +43,13 @@ import io.spine.tools.prototap.Names.GRADLE_EXTENSION_NAME
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_CLASSIFIER
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_NAME
 import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_FILE
+import io.spine.tools.prototap.Paths.COMPILED_PROTOS_FILE
 import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
 import io.spine.tools.prototap.Paths.TARGET_DIR
 import io.spine.tools.prototap.Paths.interimDir
+import java.io.File
 import java.nio.file.Path
-import java.util.Base64
+import java.util.*
 import kotlin.io.path.pathString
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -134,7 +136,7 @@ private val protocPlugin: Artifact by lazy {
  *   1. As an input for `processTaskResources`.
  *      This way all the generated source code becomes resources for the `test` source set.
  *   2. Adds ProtoTap `protoc` plugin.
- *   3. Instructs to generate descriptor set file, if [Extension.generateDescriptorSet]
+ *   3. Instructs to generate a descriptor set file, if [Extension.generateDescriptorSet]
  *      property is set to `true`.
  */
 private fun Project.tuneProtoTasks() {
@@ -145,6 +147,9 @@ private fun Project.tuneProtoTasks() {
     protobufExtension?.generateProtoTasks {
         val sourceSetName = extension.sourceSet.get().name
         it.ofSourceSet(sourceSetName).configureEach { task ->
+            task.doFirst {
+                task.listCompiledProtoFiles()
+            }
             tasks.processTestResources.run {
                 copySourcesFrom(task.outputBaseDir)
                 copyProtocPluginOutput()
@@ -158,8 +163,17 @@ private fun Project.tuneProtoTasks() {
     }
 }
 
+private fun GenerateProtoTask.listCompiledProtoFiles() {
+    val protoFiles = sourceDirs.asFileTree.files.toList().sorted()
+    val file = File(project.interimFile(COMPILED_PROTOS_FILE))
+    file.parentFile.mkdirs()
+    val separator = System.lineSeparator()
+    val list = protoFiles.joinToString(separator) { it.path } + separator
+    file.writeText(list)
+}
+
 private val Project.interimDir: Path
-    get() = interimDir(buildDir.path)
+    get() = interimDir(layout.buildDirectory.get().asFile.path)
 
 private fun Project.interimFile(name: String): String =
     interimDir.resolve(name).pathString

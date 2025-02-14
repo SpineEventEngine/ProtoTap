@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,12 +26,12 @@
 
 @file:Suppress("RemoveRedundantQualifierName") // To prevent IDEA replacing FQN imports.
 
-import io.spine.internal.gradle.publish.PublishingRepos
-import io.spine.internal.gradle.publish.spinePublishing
-import io.spine.internal.gradle.report.coverage.JacocoConfig
-import io.spine.internal.gradle.report.license.LicenseReporter
-import io.spine.internal.gradle.report.pom.PomGenerator
-import io.spine.internal.gradle.standardToSpineSdk
+import io.spine.gradle.publish.PublishingRepos
+import io.spine.gradle.publish.spinePublishing
+import io.spine.gradle.report.coverage.JacocoConfig
+import io.spine.gradle.report.license.LicenseReporter
+import io.spine.gradle.report.pom.PomGenerator
+import io.spine.gradle.standardToSpineSdk
 
 buildscript {
     standardSpineSdkRepositories()

@@ -1,11 +1,11 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -25,12 +25,12 @@
  */
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import io.spine.internal.dependency.JUnit
-import io.spine.internal.dependency.Kotlin
-import io.spine.internal.dependency.Protobuf
-import io.spine.internal.dependency.Spine
-import io.spine.internal.gradle.isSnapshot
-import io.spine.internal.gradle.publish.SpinePublishing
+import io.spine.dependency.lib.Kotlin
+import io.spine.dependency.lib.Protobuf
+import io.spine.dependency.local.ToolBase
+import io.spine.dependency.test.JUnit
+import io.spine.gradle.isSnapshot
+import io.spine.gradle.publish.SpinePublishing
 
 plugins {
     `java-gradle-plugin`
@@ -47,7 +47,7 @@ dependencies {
     compileOnly(Protobuf.GradlePlugin.lib)
 
     api(project(":api"))
-    implementation(Spine.pluginBase)
+    implementation(ToolBase.pluginBase)
     implementation(Kotlin.gradlePluginApi)
 }
 
@@ -62,7 +62,7 @@ testing {
                 implementation(Kotlin.gradlePluginLib)
                 implementation(gradleKotlinDsl())
                 implementation(Protobuf.GradlePlugin.lib)
-                implementation(Spine.pluginTestlib)
+                implementation(ToolBase.pluginTestlib)
             }
         }
     }
