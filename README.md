@@ -103,7 +103,7 @@ my-project
           CodeGeneratorRequest.binbp  
           FileDescriptorSet.binpb <—— The descriptor set file.
 ```
-By default descriptor set files are not generated.
+By default, descriptor set files are not generated.
 
 [protobuf-plugin]: https://github.com/google/protobuf-gradle-plugin
 [test-fixtures]: https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures
