@@ -32,6 +32,9 @@ import io.spine.tools.prototap.Paths.COMPILED_PROTOS_FILE
 
 /**
  * Utility class for working with a [COMPILED_PROTOS_FILE] created by ProtoTap.
+ *
+ * @param classLoader The classloader of the classes in resources of which ProtoTap
+ *   creates the [COMPILED_PROTOS_FILE].
  */
 public class CompiledProtosFile(classLoader: ClassLoader) {
 
@@ -45,7 +48,7 @@ public class CompiledProtosFile(classLoader: ClassLoader) {
     public fun exists(): Boolean = fileList.exists()
 
     /**
-     * Read the lines from the file, filtering blank ones.
+     * Read the lines from the file, filtering out blank ones.
      */
     public fun list(): List<String> =
         fileList.read()
