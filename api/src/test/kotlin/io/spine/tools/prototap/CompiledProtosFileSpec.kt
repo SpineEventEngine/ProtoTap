@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test
 @DisplayName("`CompiledProtosFile` should")
 internal class CompiledProtosFileSpec {
 
-
     companion object {
 
         private val classLoader = this::class.java.classLoader
