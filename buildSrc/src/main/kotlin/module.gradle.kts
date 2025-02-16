@@ -32,9 +32,11 @@ import io.spine.dependency.lib.Guava
 import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.local.ArtifactVersion
+import io.spine.dependency.local.Base
 import io.spine.dependency.local.Spine
 import io.spine.dependency.local.Logging
 import io.spine.dependency.test.JUnit
+import io.spine.dependency.test.Kotest
 import io.spine.dependency.test.Truth
 import io.spine.gradle.VersionWriter
 import io.spine.gradle.checkstyle.CheckStyleConfig
@@ -95,6 +97,7 @@ fun Module.addDependencies() {
         testImplementation(Guava.testLib)
         JUnit.api.forEach { testImplementation(it) }
         Truth.libs.forEach { testImplementation(it) }
+        testImplementation(Kotest.assertions)
         testRuntimeOnly(JUnit.runner)
     }
 }
@@ -114,6 +117,7 @@ fun Module.forceConfigurations() {
                     Coroutines.bom,
                     Coroutines.coreJvm,
                     Jackson.Junior.objects,
+                    Base.lib,
                     Spine.reflect,
                     Logging.lib,
                 )

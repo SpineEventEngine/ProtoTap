@@ -24,19 +24,43 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.dependency.local
+package io.spine.tools.prototap
 
-/**
- * Spine Base module.
- *
- * @see <a href="https://github.com/SpineEventEngine/base">spine-base</a>
- */
-@Suppress("ConstPropertyName")
-object Base {
-    const val version = "2.0.0-SNAPSHOT.241"
-    const val versionForBuildScript = "2.0.0-SNAPSHOT.241"
-    const val group = Spine.group
-    const val artifact = "spine-base"
-    const val lib = "$group:$artifact:$version"
-    const val libForBuildScript = "$group:$artifact:$versionForBuildScript"
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
+import java.io.File
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
+@DisplayName("`CompiledProtosFile` should")
+internal class CompiledProtosFileSpec {
+
+    companion object {
+
+        private val classLoader = this::class.java.classLoader
+
+        lateinit var file: CompiledProtosFile
+
+        @BeforeAll
+        @JvmStatic
+        fun createSubject() {
+            file = CompiledProtosFile(classLoader)
+        }
+    }
+
+    @Test
+    fun `tell if a resource file exists`() {
+        file.exists() shouldBe true
+    }
+
+    @Test
+    fun `list content`() {
+        file.list() shouldHaveSize 3
+    }
+
+    @Test
+    fun `create list of files`() {
+        file.listFiles { File(it) } shouldHaveSize 3
+    }
 }

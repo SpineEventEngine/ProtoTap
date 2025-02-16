@@ -24,19 +24,41 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.dependency.local
+package io.spine.tools.prototap
+
+import io.spine.io.Resource
+import io.spine.tools.prototap.Names.PROTOC_PLUGIN_NAME
+import io.spine.tools.prototap.Paths.COMPILED_PROTOS_FILE
 
 /**
- * Spine Base module.
+ * Utility class for working with a [COMPILED_PROTOS_FILE] created by ProtoTap.
  *
- * @see <a href="https://github.com/SpineEventEngine/base">spine-base</a>
+ * @param classLoader The classloader of the classes in resources of which ProtoTap
+ *   creates the [COMPILED_PROTOS_FILE].
  */
-@Suppress("ConstPropertyName")
-object Base {
-    const val version = "2.0.0-SNAPSHOT.241"
-    const val versionForBuildScript = "2.0.0-SNAPSHOT.241"
-    const val group = Spine.group
-    const val artifact = "spine-base"
-    const val lib = "$group:$artifact:$version"
-    const val libForBuildScript = "$group:$artifact:$versionForBuildScript"
+public class CompiledProtosFile(classLoader: ClassLoader) {
+
+    private val fileList: Resource by lazy {
+        Resource.file("$PROTOC_PLUGIN_NAME/$COMPILED_PROTOS_FILE", classLoader)
+    }
+
+    /**
+     * Verifies if the resource file with the list of compiled porto files exists.
+     */
+    public fun exists(): Boolean = fileList.exists()
+
+    /**
+     * Read the lines from the file, filtering out blank ones.
+     */
+    public fun list(): List<String> =
+        fileList.read()
+            .lines()
+            .filter { it.isNotBlank() }
+
+    /**
+     * Creates a list of files of the type [F] by applying
+     * the [block] for each line of the file.
+     */
+    public fun <F : Any> listFiles(block: (String) -> F): List<F> =
+        list().map(block)
 }

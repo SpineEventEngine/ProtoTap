@@ -1,0 +1,5 @@
+/Users/me/Projects/Spine/ProtoTap/src/test/proto/spine/prototap/source_file_1.proto
+
+/Users/me/Projects/Spine/ProtoTap/src/test/proto/spine/prototap/source_file_2.proto
+
+/Users/me/Projects/Spine/ProtoTap/src/test/proto/spine/prototap/source_file_3.proto
