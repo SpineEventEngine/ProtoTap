@@ -61,6 +61,6 @@ internal class CompiledProtosFileSpec {
 
     @Test
     fun `create list of files`() {
-        file.toFileList { File(it) } shouldHaveSize 3
+        file.listFiles { File(it) } shouldHaveSize 3
     }
 }

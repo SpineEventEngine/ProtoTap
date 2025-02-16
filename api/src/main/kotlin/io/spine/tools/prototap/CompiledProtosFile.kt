@@ -56,6 +56,6 @@ public class CompiledProtosFile(classLoader: ClassLoader) {
      * Creates a list of files of the type [F] by applying
      * the [block] for each line of the file.
      */
-    public fun <F : Any> toFileList(block: (String) -> F): List<F> =
+    public fun <F : Any> listFiles(block: (String) -> F): List<F> =
         list().map(block)
 }
