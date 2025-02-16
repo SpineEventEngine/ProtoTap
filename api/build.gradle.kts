@@ -1,5 +1,3 @@
-import io.spine.dependency.local.Base
-
 /*
  * Copyright 2025, TeamDev. All rights reserved.
  *
@@ -25,6 +23,8 @@ import io.spine.dependency.local.Base
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import io.spine.dependency.local.Base
 
 dependencies {
     implementation(Base.lib)
