@@ -122,10 +122,10 @@ private fun Project.createProtocPlugin() = protobufExtension?.run {
 private val protocPlugin: Artifact by lazy {
     artifact {
         useSpineToolsGroup()
-        name = "prototap-protoc-plugin"
-        version = io.spine.tools.prototap.gradle.Plugin.readVersion()
-        classifier = PROTOC_PLUGIN_CLASSIFIER
-        extension = "jar"
+        setName("prototap-protoc-plugin")
+        setVersion(io.spine.tools.prototap.gradle.Plugin.readVersion())
+        setClassifier(PROTOC_PLUGIN_CLASSIFIER)
+        setExtension("jar")
     }
 }
 

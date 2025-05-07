@@ -28,14 +28,25 @@ package io.spine.dependency.lib
 
 /**
  * Kotlin Coroutines.
- * 
+ *
  * @see <a href="https://github.com/Kotlin/kotlinx.coroutines">GitHub projecet</a>
  */
-@Suppress("unused")
+@Suppress("unused", "ConstPropertyName")
+@Deprecated(
+    message = "Please use `Coroutines` from the `io.spine.dependency.kotlinx` package",
+    replaceWith = ReplaceWith(
+        expression = "Coroutines",
+        imports = ["io.spine.dependency.kotlinx.Coroutines"]
+    )
+)
 object Coroutines {
-    const val version = "1.6.4"
-    const val jdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$version"
-    const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
-    const val bom = "org.jetbrains.kotlinx:kotlinx-coroutines-bom:$version"
-    const val coreJvm = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$version"
+    const val group = "org.jetbrains.kotlinx"
+    val version = io.spine.dependency.kotlinx.Coroutines.version
+    val bom = "$group:kotlinx-coroutines-bom:$version"
+    val core = "$group:kotlinx-coroutines-core:$version"
+    val coreJvm = "$group:kotlinx-coroutines-core-jvm:$version"
+    val jdk8 = "$group:kotlinx-coroutines-jdk8:$version"
+    val debug = "$group:kotlinx-coroutines-debug:$version"
+    val test = "$group:kotlinx-coroutines-test:$version"
+    val testJvm = "$group:kotlinx-coroutines-test-jvm:$version"
 }

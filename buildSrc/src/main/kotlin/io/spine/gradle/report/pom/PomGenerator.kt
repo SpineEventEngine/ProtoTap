@@ -68,15 +68,17 @@ object PomGenerator {
     fun applyTo(project: Project) {
 
         /**
-         * In some cases, the `base` plugin, which is by default is added by e.g. `java`,
-         * is not yet added. `base` plugin defines the `build` task. This generator needs it.
+         * In some cases, the `base` plugin, which by default is added by e.g. `java`,
+         * is not yet added.
+         *
+         * The `base` plugin defines the `build` task.
+         * This generator needs it.
          */
         project.apply {
             plugin(BasePlugin::class.java)
         }
 
-        project.tasks.register("generatePom") {
-            val generatePom = this
+        val task = project.tasks.register("generatePom") {
             doLast {
                 val pomFile = project.projectDir.resolve("pom.xml")
                 project.delete(pomFile)
@@ -86,11 +88,11 @@ object PomGenerator {
                 writer.writeTo(pomFile)
             }
 
-            val buildTask = project.tasks.findByName("build")!!
-            buildTask.finalizedBy(generatePom)
-
             val assembleTask = project.tasks.findByName("assemble")!!
-            generatePom.dependsOn(assembleTask)
+            dependsOn(assembleTask)
         }
+
+        val buildTask = project.tasks.findByName("build")!!
+        buildTask.finalizedBy(task)
     }
 }
