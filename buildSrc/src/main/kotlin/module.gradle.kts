@@ -24,37 +24,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.dependency.boms.BomsPlugin
 import io.spine.dependency.build.CheckerFramework
 import io.spine.dependency.build.ErrorProne
 import io.spine.dependency.build.FindBugs
-import io.spine.dependency.lib.Coroutines
-import io.spine.dependency.lib.Guava
-import io.spine.dependency.lib.Jackson
-import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.local.ArtifactVersion
 import io.spine.dependency.local.Base
-import io.spine.dependency.local.Spine
 import io.spine.dependency.local.Logging
-import io.spine.dependency.test.JUnit
-import io.spine.dependency.test.Kotest
-import io.spine.dependency.test.Truth
+import io.spine.dependency.local.Spine
+import io.spine.dependency.local.ToolBase
 import io.spine.gradle.VersionWriter
 import io.spine.gradle.checkstyle.CheckStyleConfig
 import io.spine.gradle.github.pages.updateGitHubPages
 import io.spine.gradle.javac.configureErrorProne
 import io.spine.gradle.javac.configureJavac
 import io.spine.gradle.javadoc.JavadocConfig
-import io.spine.gradle.kotlin.applyJvmToolchain
 import io.spine.gradle.kotlin.setFreeCompilerArgs
 import io.spine.gradle.publish.IncrementGuard
 import io.spine.gradle.report.license.LicenseReporter
-import io.spine.gradle.testing.configureLogging
-import io.spine.gradle.testing.registerTestTasks
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
     kotlin("jvm")
+    id("module-testing")
     id("net.ltgt.errorprone")
     id("detekt-code-analysis")
     id("pmd-settings")
@@ -63,6 +55,7 @@ plugins {
     `project-report`
     idea
 }
+apply<BomsPlugin>()
 apply<IncrementGuard>()
 apply<VersionWriter>()
 
@@ -74,11 +67,8 @@ project.run {
     addDependencies()
     forceConfigurations()
 
-    val javaVersion = JavaLanguageVersion.of(11)
-    configureJava(javaVersion)
-    configureKotlin(javaVersion)
-
-    configureTests()
+    configureJava(BuildSettings.javaVersion)
+    configureKotlin()
 
     configureGitHubPages()
     configureTaskDependencies()
@@ -93,12 +83,6 @@ fun Module.addDependencies() {
         compileOnlyApi(FindBugs.annotations)
         compileOnlyApi(CheckerFramework.annotations)
         ErrorProne.annotations.forEach { compileOnlyApi(it) }
-
-        testImplementation(Guava.testLib)
-        JUnit.api.forEach { testImplementation(it) }
-        Truth.libs.forEach { testImplementation(it) }
-        testImplementation(Kotest.assertions)
-        testRuntimeOnly(JUnit.runner)
     }
 }
 
@@ -110,14 +94,8 @@ fun Module.forceConfigurations() {
             resolutionStrategy {
                 @Suppress("DEPRECATION") // To force `Kotlin.stdLibJdk7` version.
                 force(
-                    Kotlin.stdLibJdk7,
-                    JUnit.runner,
-                    Coroutines.jdk8,
-                    Coroutines.core,
-                    Coroutines.bom,
-                    Coroutines.coreJvm,
-                    Jackson.Junior.objects,
                     Base.lib,
+                    ToolBase.pluginBase,
                     Spine.reflect,
                     Logging.lib,
                 )
@@ -138,28 +116,12 @@ fun Module.configureJava(javaVersion: JavaLanguageVersion) {
     }
 }
 
-fun Module.configureKotlin(javaVersion: JavaLanguageVersion) {
+fun Module.configureKotlin() {
     kotlin {
-        applyJvmToolchain(javaVersion.asInt())
         explicitApi()
-    }
-
-    tasks {
-        withType<KotlinCompile>().configureEach {
-            kotlinOptions.jvmTarget = javaVersion.toString()
+        compilerOptions {
+            jvmTarget.set(BuildSettings.jvmTarget)
             setFreeCompilerArgs()
-        }
-    }
-}
-
-fun Module.configureTests() {
-    tasks {
-        registerTestTasks()
-        test.configure {
-            useJUnitPlatform {
-                includeEngines("junit-jupiter")
-            }
-            configureLogging()
         }
     }
 }

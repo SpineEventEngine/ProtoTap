@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("unused")
+
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.lib.Protobuf
@@ -48,7 +50,7 @@ dependencies {
 
     api(project(":api"))
     implementation(ToolBase.pluginBase)
-    implementation(Kotlin.gradlePluginApi)
+    implementation(Kotlin.GradlePlugin.api)
 }
 
 @Suppress(
@@ -59,7 +61,7 @@ testing {
         val test by getting(JvmTestSuite::class) {
             useJUnitJupiter(JUnit.version)
             dependencies {
-                implementation(Kotlin.gradlePluginLib)
+                implementation(Kotlin.GradlePlugin.lib)
                 implementation(gradleKotlinDsl())
                 implementation(Protobuf.GradlePlugin.lib)
                 implementation(ToolBase.pluginTestlib)
