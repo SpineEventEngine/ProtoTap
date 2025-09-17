@@ -50,8 +50,11 @@ dependencies {
 
     api(project(":api"))
     implementation(ToolBase.pluginBase)
+    implementation(ToolBase.jvmTools)
     implementation(Kotlin.GradlePlugin.api)
 }
+
+forceConfigurations()
 
 @Suppress(
     "UnstableApiUsage" /* testing suites feature */

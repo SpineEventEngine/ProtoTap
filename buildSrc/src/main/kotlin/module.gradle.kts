@@ -29,10 +29,6 @@ import io.spine.dependency.build.CheckerFramework
 import io.spine.dependency.build.ErrorProne
 import io.spine.dependency.build.FindBugs
 import io.spine.dependency.local.ArtifactVersion
-import io.spine.dependency.local.Base
-import io.spine.dependency.local.Logging
-import io.spine.dependency.local.Spine
-import io.spine.dependency.local.ToolBase
 import io.spine.gradle.VersionWriter
 import io.spine.gradle.checkstyle.CheckStyleConfig
 import io.spine.gradle.github.pages.updateGitHubPages
@@ -83,24 +79,6 @@ fun Module.addDependencies() {
         compileOnlyApi(FindBugs.annotations)
         compileOnlyApi(CheckerFramework.annotations)
         ErrorProne.annotations.forEach { compileOnlyApi(it) }
-    }
-}
-
-fun Module.forceConfigurations() {
-    with(configurations) {
-        forceVersions()
-        excludeProtobufLite()
-        all {
-            resolutionStrategy {
-                @Suppress("DEPRECATION") // To force `Kotlin.stdLibJdk7` version.
-                force(
-                    Base.lib,
-                    ToolBase.pluginBase,
-                    Spine.reflect,
-                    Logging.lib,
-                )
-            }
-        }
     }
 }
 
