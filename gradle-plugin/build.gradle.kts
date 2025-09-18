@@ -43,6 +43,8 @@ plugins {
     id("com.github.johnrengelman.shadow")
 }
 
+forceConfigurations()
+
 dependencies {
     compileOnly(gradleApi())
     compileOnly(gradleKotlinDsl())
@@ -53,8 +55,6 @@ dependencies {
     implementation(ToolBase.jvmTools)
     implementation(Kotlin.GradlePlugin.api)
 }
-
-forceConfigurations()
 
 @Suppress(
     "UnstableApiUsage" /* testing suites feature */
