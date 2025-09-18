@@ -34,10 +34,8 @@ package io.spine.tools.prototap.gradle
 import com.google.common.annotations.VisibleForTesting
 import com.google.protobuf.gradle.GenerateProtoTask
 import com.google.protobuf.gradle.id
-import io.spine.tools.version.Version
 import io.spine.tools.gradle.Artifact
 import io.spine.tools.gradle.artifact
-import io.spine.tools.gradle.protobuf.ProtobufDependencies
 import io.spine.tools.gradle.protobuf.protobufExtension
 import io.spine.tools.prototap.Names.GRADLE_EXTENSION_NAME
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_CLASSIFIER
@@ -47,6 +45,7 @@ import io.spine.tools.prototap.Paths.COMPILED_PROTOS_FILE
 import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
 import io.spine.tools.prototap.Paths.TARGET_DIR
 import io.spine.tools.prototap.Paths.interimDir
+import io.spine.tools.version.Version
 import java.io.File
 import java.nio.file.Path
 import java.util.*
@@ -64,7 +63,7 @@ public class Plugin : Plugin<Project> {
 
     override fun apply(project: Project): Unit = with(project) {
         createExtension()
-        pluginManager.withPlugin(ProtobufDependencies.gradlePlugin.id) {
+        pluginManager.withPlugin("com.google.protobuf") {
             tapProtobuf()
         }
     }
