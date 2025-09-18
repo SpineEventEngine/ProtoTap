@@ -32,6 +32,9 @@ import org.gradle.api.Project
 
 typealias Module = Project
 
+/**
+ * Forces versions of the dependencies with the conflicting version numbers.
+ */
 fun Module.forceConfigurations() {
     with(configurations) {
         forceVersions()
