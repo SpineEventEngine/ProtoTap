@@ -34,7 +34,7 @@ package io.spine.tools.prototap.gradle
 import com.google.common.annotations.VisibleForTesting
 import com.google.protobuf.gradle.GenerateProtoTask
 import com.google.protobuf.gradle.id
-import io.spine.tools.code.manifest.Version
+import io.spine.tools.version.Version
 import io.spine.tools.gradle.Artifact
 import io.spine.tools.gradle.artifact
 import io.spine.tools.gradle.protobuf.ProtobufDependencies

@@ -24,21 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.dependency.local
+import io.spine.dependency.local.Base
+import io.spine.dependency.local.Logging
+import io.spine.dependency.local.Spine
+import io.spine.dependency.local.ToolBase
+import org.gradle.api.Project
+
+typealias Module = Project
 
 /**
- * Spine Base module.
- *
- * @see <a href="https://github.com/SpineEventEngine/base">spine-base</a>
+ * Forces versions of the dependencies with the conflicting version numbers.
  */
-@Suppress("ConstPropertyName")
-object Base {
-    const val version = "2.0.0-SNAPSHOT.360"
-    const val versionForBuildScript = "2.0.0-SNAPSHOT.360"
-    const val group = Spine.group
-    const val artifact = "spine-base"
-    const val lib = "$group:$artifact:$version"
-    const val annotations = "$group:base-annotations:$version"
-    const val format = "$group:base-format:$version"
-    const val libForBuildScript = "$group:$artifact:$versionForBuildScript"
+fun Module.forceConfigurations() {
+    with(configurations) {
+        forceVersions()
+        excludeProtobufLite()
+        all {
+            resolutionStrategy {
+                @Suppress("DEPRECATION") // To force `Kotlin.stdLibJdk7` version.
+                force(
+                    Base.lib,
+                    Base.annotations,
+                    ToolBase.pluginBase,
+                    Spine.reflect,
+                    Logging.lib,
+                )
+            }
+        }
+    }
 }

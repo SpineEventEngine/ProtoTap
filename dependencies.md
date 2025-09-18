@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine.tools:prototap-api:0.11.0`
+# Dependencies of `io.spine.tools:prototap-api:0.12.0`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -66,18 +66,29 @@
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime-jvm. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jspecify. **Name** : jspecify. **Version** : 1.0.0.
      * **Project URL:** [http://jspecify.org/](http://jspecify.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
-     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
-     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
-     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : com.github.ben-manes.caffeine. **Name** : caffeine. **Version** : 3.0.5.
@@ -581,6 +592,14 @@
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -607,6 +626,14 @@
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime-jvm. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
@@ -716,12 +743,12 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Sep 18 13:00:27 WEST 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:prototap-gradle-plugin:0.11.0`
+# Dependencies of `io.spine.tools:prototap-gradle-plugin:0.12.0`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -766,10 +793,6 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
 1.  **Group** : com.squareup. **Name** : javapoet. **Version** : 1.13.0.
      * **Project URL:** [http://github.com/square/javapoet/](http://github.com/square/javapoet/)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
-     * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
-     * **License:** [CDDL + GPLv2 with classpath exception](https://github.com/javaee/javax.annotation/blob/master/LICENSE)
 
 1.  **Group** : org.jboss.forge.roaster. **Name** : roaster-api. **Version** : 2.29.0.Final.
      * **License:** [Eclipse Public License version 1.0](http://www.eclipse.org/legal/epl-v10.html)
@@ -831,18 +854,29 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime-jvm. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jspecify. **Name** : jspecify. **Version** : 1.0.0.
      * **Project URL:** [http://jspecify.org/](http://jspecify.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
-     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
-     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
-     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : com.github.ben-manes.caffeine. **Name** : caffeine. **Version** : 3.0.5.
@@ -1153,10 +1187,6 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
-     * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
-     * **License:** [CDDL + GPLv2 with classpath exception](https://github.com/javaee/javax.annotation/blob/master/LICENSE)
-
 1.  **Group** : javax.inject. **Name** : javax.inject. **Version** : 1.
      * **Project URL:** [http://code.google.com/p/atinject/](http://code.google.com/p/atinject/)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1434,6 +1464,14 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1460,6 +1498,14 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime-jvm. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
@@ -1573,12 +1619,12 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Sep 18 13:00:27 WEST 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:prototap-protoc-plugin:0.11.0`
+# Dependencies of `io.spine.tools:prototap-protoc-plugin:0.12.0`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1644,18 +1690,29 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime-jvm. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jspecify. **Name** : jspecify. **Version** : 1.0.0.
      * **Project URL:** [http://jspecify.org/](http://jspecify.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
-     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
-     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
-     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : com.github.ben-manes.caffeine. **Name** : caffeine. **Version** : 3.0.5.
@@ -2159,6 +2216,14 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2185,6 +2250,14 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-datetime-jvm. **Version** : 0.7.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
@@ -2294,4 +2367,4 @@ This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 15 21:09:14 WEST 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Sep 18 13:00:28 WEST 2025** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
