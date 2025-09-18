@@ -40,7 +40,7 @@ plugins {
     `version-to-resources`
     `write-manifest`
     id("com.gradle.plugin-publish") version "1.2.1"
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
 }
 
 forceConfigurations()
