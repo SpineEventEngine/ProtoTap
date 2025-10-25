@@ -26,19 +26,31 @@
 
 package io.spine.dependency.local
 
+// For backward compatibility.
+typealias CoreJava = CoreJvm
+
 /**
- * Spine Base module.
+ * Dependencies on `core-java` modules.
  *
- * @see <a href="https://github.com/SpineEventEngine/base">spine-base</a>
+ * See [`SpineEventEngine/core-java`](https://github.com/SpineEventEngine/core-java/).
  */
 @Suppress("ConstPropertyName", "unused")
-object Base {
-    const val version = "2.0.0-SNAPSHOT.364"
-    const val versionForBuildScript = "2.0.0-SNAPSHOT.364"
+object CoreJvm {
     const val group = Spine.group
-    const val artifact = "spine-base"
-    const val lib = "$group:$artifact:$version"
-    const val format = "$group:spine-format:$version"
-    const val libForBuildScript = "$group:$artifact:$versionForBuildScript"
-    const val annotations = "$group:spine-annotations:$version"
+    const val version = "2.0.0-SNAPSHOT.332"
+
+    const val coreArtifact = "spine-core"
+    const val clientArtifact = "spine-client"
+    const val serverArtifact = "spine-server"
+
+    const val core = "$group:$coreArtifact:$version"
+    const val client = "$group:$clientArtifact:$version"
+    const val server = "$group:$serverArtifact:$version"
+
+    @Deprecated("Use `serverTestLib` instead.", ReplaceWith("serverTestLib"))
+    const val testUtilServer = "${Spine.toolsGroup}:spine-server-testlib:$version"
+
+    const val coreTestLib = "${Spine.toolsGroup}:spine-core-testlib:$version"
+    const val clientTestLib = "${Spine.toolsGroup}:spine-client-testlib:$version"
+    const val serverTestLib = "${Spine.toolsGroup}:spine-server-testlib:$version"
 }

@@ -43,7 +43,7 @@ plugins {
     id("com.gradleup.shadow")
 }
 
-forceConfigurations()
+//forceConfigurations()
 
 dependencies {
     compileOnly(gradleApi())
