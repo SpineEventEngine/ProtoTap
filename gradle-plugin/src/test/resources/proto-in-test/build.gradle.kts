@@ -55,3 +55,10 @@ dependencies {
     // For `google/type/` proto types used in stub domains.
     testImplementation(GoogleApis.commonProtos)
 }
+
+// Gradle 9.x.x checks for the presence of the test source code,
+// which we don't have in this stub project.
+// Set `failOnNoDiscoveredTests` to `false` to make the build pass.
+tasks.withType<AbstractTestTask>().configureEach {
+    failOnNoDiscoveredTests = false
+}
