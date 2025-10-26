@@ -61,7 +61,7 @@ LicenseReporter.generateReportIn(project)
 
 project.run {
     addDependencies()
-    forceConfigurations()
+    //forceConfigurations()
 
     configureJava(BuildSettings.javaVersion)
     configureKotlin()

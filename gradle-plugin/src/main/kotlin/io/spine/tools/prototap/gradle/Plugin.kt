@@ -33,10 +33,9 @@ package io.spine.tools.prototap.gradle
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.protobuf.gradle.GenerateProtoTask
+import com.google.protobuf.gradle.ProtobufExtension
 import com.google.protobuf.gradle.id
-import io.spine.tools.gradle.Artifact
-import io.spine.tools.gradle.artifact
-import io.spine.tools.gradle.protobuf.protobufExtension
+import io.spine.tools.meta.MavenArtifact
 import io.spine.tools.prototap.Names.GRADLE_EXTENSION_NAME
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_CLASSIFIER
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_NAME
@@ -107,10 +106,15 @@ private fun Project.tapProtobuf() {
 private val Project.extension: Extension
     get() = extensions.getByType(Extension::class.java)
 
-private fun Project.createProtocPlugin() = protobufExtension?.run {
-    plugins {
-        it.create(PROTOC_PLUGIN_NAME) { locator ->
-            locator.artifact = protocPlugin.notation()
+private val Project.protobufExtension: ProtobufExtension?
+    get() = extensions.findByType(ProtobufExtension::class.java)
+
+private fun Project.createProtocPlugin() {
+    protobufExtension?.run {
+        plugins {
+            it.create(PROTOC_PLUGIN_NAME) { locator ->
+                locator.artifact = protocPlugin.coordinates
+            }
         }
     }
 }
@@ -118,14 +122,14 @@ private fun Project.createProtocPlugin() = protobufExtension?.run {
 /**
  * The Maven artifact of the ProtoTap plugin for `protoc`.
  */
-private val protocPlugin: Artifact by lazy {
-    artifact {
-        useSpineToolsGroup()
-        setName("prototap-protoc-plugin")
-        setVersion(io.spine.tools.prototap.gradle.Plugin.readVersion())
-        setClassifier(PROTOC_PLUGIN_CLASSIFIER)
-        setExtension("jar")
-    }
+private val protocPlugin: MavenArtifact by lazy {
+    MavenArtifact(
+        group = "io.spine.tools",
+        name = "prototap-protoc-plugin",
+        version = io.spine.tools.prototap.gradle.Plugin.readVersion(),
+        classifier = PROTOC_PLUGIN_CLASSIFIER,
+        extension = "jar"
+    )
 }
 
 /**

@@ -24,41 +24,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import com.google.protobuf.gradle.protobuf
-import io.spine.dependency.lib.GoogleApis
-import io.spine.dependency.lib.Protobuf
-import io.spine.gradle.repo.standardToSpineSdk
+package io.spine.dependency.local
 
-buildscript {
-    standardSpineSdkRepositories()
-}
+// For backward compatibility.
+typealias CoreJava = CoreJvm
 
-plugins {
-    java
-    id("com.google.protobuf")
-    id("@PROTOTAP_PLUGIN_ID@") version "@PROTOTAP_VERSION@"
-}
+/**
+ * Dependencies on `core-java` modules.
+ *
+ * See [`SpineEventEngine/core-java`](https://github.com/SpineEventEngine/core-java/).
+ */
+@Suppress("ConstPropertyName", "unused")
+object CoreJvm {
+    const val group = Spine.group
+    const val version = "2.0.0-SNAPSHOT.332"
 
-repositories {
-    mavenLocal()
-    standardToSpineSdk()
-}
+    const val coreArtifact = "spine-core"
+    const val clientArtifact = "spine-client"
+    const val serverArtifact = "spine-server"
 
-protobuf {
-    protoc {
-        artifact = io.spine.dependency.lib.Protobuf.compiler
-    }
-}
+    const val core = "$group:$coreArtifact:$version"
+    const val client = "$group:$clientArtifact:$version"
+    const val server = "$group:$serverArtifact:$version"
 
-dependencies {
-    testImplementation(Protobuf.javaLib)
-    // For `google/type/` proto types used in stub domains.
-    testImplementation(GoogleApis.commonProtos)
-}
+    @Deprecated("Use `serverTestLib` instead.", ReplaceWith("serverTestLib"))
+    const val testUtilServer = "${Spine.toolsGroup}:spine-server-testlib:$version"
 
-// Gradle 9.x.x checks for the presence of the test source code,
-// which we don't have in this stub project.
-// Set `failOnNoDiscoveredTests` to `false` to make the build pass.
-tasks.withType<AbstractTestTask>().configureEach {
-    failOnNoDiscoveredTests = false
+    const val coreTestLib = "${Spine.toolsGroup}:spine-core-testlib:$version"
+    const val clientTestLib = "${Spine.toolsGroup}:spine-client-testlib:$version"
+    const val serverTestLib = "${Spine.toolsGroup}:spine-server-testlib:$version"
 }

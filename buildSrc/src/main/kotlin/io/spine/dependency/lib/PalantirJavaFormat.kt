@@ -24,32 +24,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.local.Base
-import io.spine.dependency.local.Logging
-import io.spine.dependency.local.Spine
-import io.spine.dependency.local.ToolBase
-import org.gradle.api.Project
+package io.spine.dependency.lib
 
-typealias Module = Project
+import io.spine.dependency.Dependency
 
 /**
- * Forces versions of the dependencies with the conflicting version numbers.
+ * Palantir Java Format.
+ *
+ * @see <a href="https://github.com/palantir/palantir-java-format">GitHub Repo</a>
  */
-fun Module.forceConfigurations() {
-    with(configurations) {
-        forceVersions()
-        excludeProtobufLite()
-        all {
-            resolutionStrategy {
-                @Suppress("DEPRECATION") // To force `Kotlin.stdLibJdk7` version.
-                force(
-                    Base.lib,
-                    Base.annotations,
-                    ToolBase.pluginBase,
-                    Spine.reflect,
-                    Logging.lib,
-                )
-            }
-        }
-    }
+object PalantirJavaFormat : Dependency() {
+
+    override val group = "com.palantir.javaformat"
+    override val version = "2.75.0"
+    override val modules: List<String> = listOf("$group:palantir-java-format")
+
+    val lib = artifact(modules[0])
 }
