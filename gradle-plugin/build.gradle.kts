@@ -43,8 +43,6 @@ plugins {
     id("com.gradleup.shadow")
 }
 
-//forceConfigurations()
-
 dependencies {
     compileOnly(gradleApi())
     compileOnly(gradleKotlinDsl())
