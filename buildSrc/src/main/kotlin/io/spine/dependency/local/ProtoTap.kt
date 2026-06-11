@@ -32,13 +32,13 @@ package io.spine.dependency.local
  * See [`SpineEventEngine/ProtoTap`](https://github.com/SpineEventEngine/ProtoTap/).
  */
 @Suppress(
-    "unused" /* Some subprojects do not use ProtoData directly. */,
+    "unused" /* Some subprojects do not use ProtoTap directly. */,
     "ConstPropertyName" /* We use custom convention for artifact properties. */,
     "MemberVisibilityCanBePrivate" /* The properties are used directly by other subprojects. */,
 )
 object ProtoTap {
-    const val group = "io.spine.tools"
-    const val version = "0.13.0"
+    const val group = Spine.toolsGroup
+    const val version = "0.14.0"
     const val gradlePluginId = "io.spine.prototap"
     const val api = "$group:prototap-api:$version"
     const val gradlePlugin = "$group:prototap-gradle-plugin:$version"

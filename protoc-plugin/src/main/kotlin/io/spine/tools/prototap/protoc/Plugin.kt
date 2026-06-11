@@ -30,7 +30,7 @@ package io.spine.tools.prototap.protoc
 
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse
-import io.spine.code.proto.CodeGeneratorRequestWriter
+import io.spine.tools.code.proto.CodeGeneratorRequestWriter
 
 /**
  * Stores received `CodeGeneratorRequest` message to the file the name of which is passed as

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,8 @@ package io.spine.gradle.report.license
 import com.github.jk1.license.LicenseReportExtension
 import com.github.jk1.license.LicenseReportExtension.ALL
 import com.github.jk1.license.LicenseReportPlugin
+import io.spine.dependency.local.Spine
+import io.spine.gradle.SpineTaskGroup
 import io.spine.gradle.applyPlugin
 import io.spine.gradle.getTask
 import java.io.File
@@ -42,7 +44,7 @@ import org.gradle.kotlin.dsl.the
  *
  * Transitive dependencies are included.
  *
- * The output file is placed to the root folder of the root Gradle project.
+ * The output file is placed under `docs/dependencies` of the root Gradle project.
  *
  * Usage:
  *
@@ -85,10 +87,9 @@ object LicenseReporter {
         with(project.the<LicenseReportExtension>()) {
             outputDir = reportOutputDir.absolutePath
             excludeGroups = arrayOf(
-                "io.spine",
+                Spine.group,
                 "io.spine.gcloud",
-                "io.spine.protodata",
-                "io.spine.tools",
+                Spine.toolsGroup,
                 "io.spine.validation"
             )
             configurations = ALL
@@ -108,6 +109,8 @@ object LicenseReporter {
     fun mergeAllReports(project: Project) {
         val rootProject = project.rootProject
         val mergeTask = rootProject.tasks.register(mergeTaskName) {
+            group = SpineTaskGroup.name
+            description = "Merges per-project license reports into a single repository-wide report"
             val consolidationTask = this
             val assembleTask = project.getTask<Task>("assemble")
             val sourceProjects: Iterable<Project> = sourceProjects(rootProject)
@@ -145,19 +148,27 @@ object LicenseReporter {
 
     /**
      * Merges the license reports from all [sourceProjects] into a single file under
-     * the [rootProject]'s root directory.
+     * the [rootProject]'s dependency report directory.
      */
     private fun mergeReports(
         sourceProjects: Iterable<Project>,
         rootProject: Project
     ) {
-        val paths = sourceProjects.map {
-            val buildDir = it.layout.buildDirectory.asFile.get()
-            "$buildDir/${Paths.relativePath}/${Paths.outputFilename}"
-        }
-        println("Merging the license reports from the all projects.")
+        val paths = sourceProjects
+            .map {
+                val buildDir = it.layout.buildDirectory.asFile.get()
+                "$buildDir/${Paths.relativePath}/${Paths.outputFilename}"
+            }.filter {
+                val exists = File(it).exists()
+                if (!exists) {
+                    rootProject.logger.debug("License report file not found: $it")
+                }
+                exists
+            }
+        println("Merging the license reports from all projects.")
         val mergedContent = paths.joinToString("\n\n\n") { (File(it)).readText() }
-        val output = File("${rootProject.rootDir}/${Paths.outputFilename}")
+        val output = Paths.outputFile(rootProject.rootDir, Paths.outputFilename)
+        output.parentFile.mkdirs()
         output.writeText(mergedContent)
     }
 }
