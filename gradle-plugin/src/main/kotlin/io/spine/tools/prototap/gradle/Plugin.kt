@@ -137,7 +137,7 @@ private val protocPlugin: MavenArtifact by lazy {
  * Configures [GenerateProtoTask] for the source set specified in the [Extension.sourceSet].
  *
  * The task is configured in the following ways:
- *   1. As an input for `processTaskResources`.
+ *   1. As an input for `processTestResources`.
  *      This way all the generated source code becomes resources for the `test` source set.
  *   2. Adds ProtoTap `protoc` plugin.
  *   3. Instructs to generate a descriptor set file, if [Extension.generateDescriptorSet]
