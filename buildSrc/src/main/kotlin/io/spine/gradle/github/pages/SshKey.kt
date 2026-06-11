@@ -57,7 +57,7 @@ internal class SshKey(
         val gitHubAccessKey = gitHubKey()
         log { "Obtained the key file at ${gitHubAccessKey.absolutePath}." }
         val sshConfigFile = sshConfigFile()
-        log { "Located the SSH key file at ${sshConfigFile.absolutePath}." }
+        log { "Located the SSH config file at ${sshConfigFile.absolutePath}." }
         sshConfigFile.appendPublisher(gitHubAccessKey)
         log { "SSH config file appended." }
 
