@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ import io.spine.tools.prototap.Names.GRADLE_EXTENSION_NAME
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_CLASSIFIER
 import io.spine.tools.prototap.Names.PROTOC_PLUGIN_NAME
 import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_FILE
+import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_JSON_FILE
 import io.spine.tools.prototap.Paths.COMPILED_PROTOS_FILE
 import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
 import io.spine.tools.prototap.Paths.TARGET_DIR
@@ -135,12 +136,14 @@ private val protocPlugin: MavenArtifact by lazy {
 /**
  * Configures [GenerateProtoTask] for the source set specified in the [Extension.sourceSet].
  *
- * The task is configured to in the following ways:
+ * The task is configured in the following ways:
  *   1. As an input for `processTaskResources`.
  *      This way all the generated source code becomes resources for the `test` source set.
  *   2. Adds ProtoTap `protoc` plugin.
  *   3. Instructs to generate a descriptor set file, if [Extension.generateDescriptorSet]
  *      property is set to `true`.
+ *   4. Declares the tapped files as outputs of the task, so that they are stored in
+ *      the build cache and restored on cache hits.
  */
 private fun Project.tuneProtoTasks() {
     /* The below block adds a configuration action for the `GenerateProtoTaskCollection`.
@@ -161,6 +164,7 @@ private fun Project.tuneProtoTasks() {
             task.apply {
                 addProtocPlugin()
                 grabDescriptorSetFile()
+                declareTappedFilesAsOutputs()
             }
         }
     }
@@ -168,7 +172,7 @@ private fun Project.tuneProtoTasks() {
 
 private fun GenerateProtoTask.listCompiledProtoFiles() {
     val protoFiles = sourceDirs.asFileTree.files.toList().sorted()
-    val file = File(project.interimFile(COMPILED_PROTOS_FILE))
+    val file = File(project.compiledProtosFile)
     file.parentFile.mkdirs()
     val separator = System.lineSeparator()
     val list = protoFiles.joinToString(separator) { it.path } + separator
@@ -184,8 +188,14 @@ private fun Project.interimFile(name: String): String =
 private val Project.codeGeneratorRequestFile: String
     get() = interimFile(CODE_GENERATOR_REQUEST_FILE)
 
+private val Project.codeGeneratorRequestJsonFile: String
+    get() = interimFile(CODE_GENERATOR_REQUEST_JSON_FILE)
+
 private val Project.descriptorSetFile: String
     get() = interimFile(DESCRIPTOR_SET_FILE)
+
+private val Project.compiledProtosFile: String
+    get() = interimFile(COMPILED_PROTOS_FILE)
 
 private fun GenerateProtoTask.addProtocPlugin() {
     plugins.apply {
@@ -221,6 +231,33 @@ private fun GenerateProtoTask.grabDescriptorSetFile() {
             includeImports = true
         }
     }
+}
+
+/**
+ * Declares the files tapped by ProtoTap as outputs of this task.
+ *
+ * The `CodeGeneratorRequest` files are written by the ProtoTap `protoc` plugin, and
+ * the list of compiled proto files is written by [listCompiledProtoFiles] — both as
+ * side effects this task does not know about. Declaring the files as task outputs
+ * stores them in the build cache, so that a cache hit on this task restores them
+ * along with the generated code. Without the declarations, the tapped files would be
+ * missing after a cached build, breaking the test suites which load them from resources.
+ *
+ * The descriptor set file produced by [grabDescriptorSetFile] needs no declaration here:
+ * Protobuf Gradle Plugin already declares its path as a task output.
+ *
+ * Caching the absolute paths listed in the compiled protos file is safe because
+ * the cache key already depends on the project location: the request file path travels
+ * base64-encoded as an option of the ProtoTap `protoc` plugin, and plugin options
+ * are task inputs. Hence, a cache hit may only occur for the same project directory.
+ */
+private fun GenerateProtoTask.declareTappedFilesAsOutputs() {
+    outputs.file(project.codeGeneratorRequestFile)
+        .withPropertyName("codeGeneratorRequestFile")
+    outputs.file(project.codeGeneratorRequestJsonFile)
+        .withPropertyName("codeGeneratorRequestJsonFile")
+    outputs.file(project.compiledProtosFile)
+        .withPropertyName("compiledProtosFile")
 }
 
 private val TaskContainer.processTestResources: ProcessResources
