@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@
 
 package io.spine.gradle.publish
 
-import dokkaKotlinJar
+import htmlDocsJar
+import io.spine.gradle.SpineTaskGroup
 import io.spine.gradle.isSnapshot
 import io.spine.gradle.repo.Repository
 import io.spine.gradle.sourceSets
@@ -34,8 +35,10 @@ import java.util.*
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.publish.PublicationContainer
 import org.gradle.api.publish.PublishingExtension
+import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
@@ -152,7 +155,10 @@ private fun TaskContainer.getOrCreatePublishTask(): TaskProvider<Task> =
     if (names.contains(PUBLISH_TASK)) {
         named(PUBLISH_TASK)
     } else {
-        register(PUBLISH_TASK)
+        register(PUBLISH_TASK) {
+            group = SpineTaskGroup.name
+            description = "Aggregates `publish` tasks of all subprojects"
+        }
     }
 
 @Suppress(
@@ -164,6 +170,7 @@ private fun TaskContainer.registerCheckCredentialsTask(
     destinations: Set<Repository>,
 ): TaskProvider<Task> {
     val checkCredentials = "checkCredentials"
+    val taskDescription = "Checks credentials for the configured publishing destinations"
     try {
         // The result of this call is ignored intentionally.
         //
@@ -175,10 +182,16 @@ private fun TaskContainer.registerCheckCredentialsTask(
         // for some previously asked `destinations`.
         named(checkCredentials)
         val toConfigure = replace(checkCredentials)
+        toConfigure.group = SpineTaskGroup.name
+        toConfigure.description = taskDescription
         toConfigure.doLastCredentialsCheck(destinations)
         return named(checkCredentials)
     } catch (_: Exception) {
-        return register(checkCredentials) { doLastCredentialsCheck(destinations) }
+        return register(checkCredentials) {
+            group = SpineTaskGroup.name
+            description = taskDescription
+            doLastCredentialsCheck(destinations)
+        }
     }
 }
 
@@ -231,11 +244,21 @@ fun TaskContainer.excludeGoogleProtoFromArtifacts() {
  * Java and Kotlin sources are default to `main` source set since it is created by `java` plugin.
  * For Proto sources to be included – [special treatment][protoSources] is needed.
  */
-internal fun Project.sourcesJar(): TaskProvider<Jar> = tasks.getOrCreate("sourcesJar") {
+fun Project.sourcesJar(): TaskProvider<Jar> = tasks.getOrCreate("sourcesJar") {
+    group = SpineTaskGroup.name
+    description = "Assembles a JAR with Java, Kotlin, and Proto sources from the `main` source set"
     dependOnGenerateProto()
     archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource) // Puts Java and Kotlin sources.
-    from(protoSources()) // Puts Proto sources.
+    // `allSource` also sees the generated `proto-resources` directory, which bundles
+    // copies of `.proto` files (this module's own and its dependencies') as runtime resources.
+    // This behavior starts from Protobuf Gradle Plugin 0.10.0, and it is not expected
+    // to be changed in the future.
+    // This is why we do not call `from(protoSources())` in this function any more.
+    from(sourceSets["main"].allSource)
+
+    // Even if there are duplicates in sources, we want only one.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     exclude("desc.ref", "*.desc") // Exclude descriptor files and the descriptor reference.
 }
 
@@ -245,7 +268,9 @@ internal fun Project.sourcesJar(): TaskProvider<Jar> = tasks.getOrCreate("source
  * The output of this task is a `jar` archive. The archive contains only
  * [Proto sources][protoSources] from `main` source set.
  */
-internal fun Project.protoJar(): TaskProvider<Jar> = tasks.getOrCreate("protoJar") {
+fun Project.protoJar(): TaskProvider<Jar> = tasks.getOrCreate("protoJar") {
+    group = SpineTaskGroup.name
+    description = "Assembles a JAR with Proto sources from the `main` source set"
     dependOnGenerateProto()
     archiveClassifier.set("proto")
     from(protoSources())
@@ -258,6 +283,8 @@ internal fun Project.protoJar(): TaskProvider<Jar> = tasks.getOrCreate("protoJar
  * of `test` source set.
  */
 internal fun Project.testJar(): TaskProvider<Jar> = tasks.getOrCreate("testJar") {
+    group = SpineTaskGroup.name
+    description = "Assembles a JAR with compiled output of the `test` source set"
     archiveClassifier.set("test")
     from(sourceSets["test"].output)
 }
@@ -270,10 +297,12 @@ internal fun Project.testJar(): TaskProvider<Jar> = tasks.getOrCreate("testJar")
  * apply the Dokka plugin. It tunes `javadoc` task to generate docs upon Kotlin sources as well.
  */
 fun Project.javadocJar(): TaskProvider<Jar> = tasks.getOrCreate("javadocJar") {
+    group = SpineTaskGroup.name
+    description = "Assembles a JAR with generated Javadoc"
     archiveClassifier.set("javadoc")
-    val javadocFiles = layout.buildDirectory.files("/docs/javadoc")
+    val javadocFiles = layout.buildDirectory.dir("dokka/javadoc")
     from(javadocFiles)
-    dependsOn("javadoc")
+    dependsOn("dokkaGeneratePublicationJavadoc")
 }
 
 internal fun TaskContainer.getOrCreate(name: String, init: Jar.() -> Unit): TaskProvider<Jar> =
@@ -300,12 +329,11 @@ internal fun Project.artifacts(jarFlags: JarFlags): Set<TaskProvider<Jar>> {
         tasks.add(sourcesJar())
     }
 
-    if (jarFlags.javadocJar) {
-        tasks.add(javadocJar())
-    }
+    tasks.add(javadocJar())
+    tasks.add(htmlDocsJar())
 
     // We don't want to have an empty "proto.jar" when a project doesn't have any Proto files.
-    if (hasProto() && jarFlags.publishProtoJar) {
+    if (hasProto()) {
         tasks.add(protoJar())
     }
 
@@ -315,9 +343,22 @@ internal fun Project.artifacts(jarFlags: JarFlags): Set<TaskProvider<Jar>> {
         tasks.add(testJar())
     }
 
-    if (jarFlags.publishDokkaKotlinJar) {
-        tasks.add(dokkaKotlinJar())
-    }
-
     return tasks
+}
+
+/**
+ * Adds the source code and documentation JARs to the publication.
+ */
+@Suppress("unused")
+fun MavenPublication.addSourceAndDocJars(project: Project) {
+    val tasks = mutableSetOf<TaskProvider<Jar>>()
+    tasks.add(project.sourcesJar())
+    tasks.add(project.javadocJar())
+    tasks.add(project.htmlDocsJar())
+    if (project.hasProto()) {
+        tasks.add(project.protoJar())
+    }
+    tasks.forEach {
+        artifact(it)
+    }
 }

@@ -28,7 +28,7 @@
 
 import io.spine.gradle.publish.PublishingRepos
 import io.spine.gradle.publish.spinePublishing
-import io.spine.gradle.report.coverage.JacocoConfig
+import io.spine.gradle.report.coverage.KoverConfig
 import io.spine.gradle.report.license.LicenseReporter
 import io.spine.gradle.report.pom.PomGenerator
 import io.spine.gradle.repo.standardToSpineSdk
@@ -44,7 +44,7 @@ plugins {
     `project-report`
     `gradle-doctor`
 }
-JacocoConfig.applyTo(project)
+KoverConfig.applyTo(project)
 PomGenerator.applyTo(project)
 LicenseReporter.mergeAllReports(project)
 
@@ -63,6 +63,7 @@ spinePublishing {
         )
     }
     artifactPrefix = "prototap-"
+    toolArtifactPrefix = "prototap-"
 }
 
 allprojects {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,17 +27,19 @@
 package io.spine.dependency.local
 
 // For backward compatibility.
+@Suppress("unused")
+@Deprecated("Use `CoreJvm` instead.", ReplaceWith("CoreJvm"))
 typealias CoreJava = CoreJvm
 
 /**
- * Dependencies on `core-java` modules.
+ * Dependencies on `core-jvm` modules.
  *
- * See [`SpineEventEngine/core-java`](https://github.com/SpineEventEngine/core-java/).
+ * See [`SpineEventEngine/core-jvm`](https://github.com/SpineEventEngine/core-jvm/).
  */
 @Suppress("ConstPropertyName", "unused")
 object CoreJvm {
     const val group = Spine.group
-    const val version = "2.0.0-SNAPSHOT.332"
+    const val version = "2.0.0-SNAPSHOT.373"
 
     const val coreArtifact = "spine-core"
     const val clientArtifact = "spine-client"
@@ -48,9 +50,9 @@ object CoreJvm {
     const val server = "$group:$serverArtifact:$version"
 
     @Deprecated("Use `serverTestLib` instead.", ReplaceWith("serverTestLib"))
-    const val testUtilServer = "${Spine.toolsGroup}:spine-server-testlib:$version"
+    const val testUtilServer = "${Spine.toolsGroup}:server-testlib:$version"
 
-    const val coreTestLib = "${Spine.toolsGroup}:spine-core-testlib:$version"
-    const val clientTestLib = "${Spine.toolsGroup}:spine-client-testlib:$version"
-    const val serverTestLib = "${Spine.toolsGroup}:spine-server-testlib:$version"
+    const val coreTestLib = "${Spine.toolsGroup}:core-testlib:$version"
+    const val clientTestLib = "${Spine.toolsGroup}:client-testlib:$version"
+    const val serverTestLib = "${Spine.toolsGroup}:server-testlib:$version"
 }

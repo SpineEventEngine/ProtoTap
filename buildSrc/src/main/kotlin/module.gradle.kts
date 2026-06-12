@@ -24,12 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("AvoidApplyPluginMethod") // We apply some plugins via classes, not by id.
+
+import com.google.common.io.Files
 import io.spine.dependency.boms.BomsPlugin
 import io.spine.dependency.build.CheckerFramework
 import io.spine.dependency.build.ErrorProne
 import io.spine.dependency.build.FindBugs
-import io.spine.dependency.local.ArtifactVersion
-import io.spine.gradle.VersionWriter
+import io.spine.dependency.build.Ksp
+import io.spine.dependency.lib.Caffeine
+import io.spine.dependency.lib.Grpc
+import io.spine.dependency.lib.Guava
+import io.spine.dependency.lib.Jackson
+import io.spine.dependency.lib.Kotlin
+import io.spine.dependency.lib.KotlinPoet
+import io.spine.dependency.lib.Protobuf
+import io.spine.dependency.lib.Roaster
+import io.spine.dependency.local.Base
+import io.spine.dependency.local.Compiler
+import io.spine.dependency.local.CoreJvm
+import io.spine.dependency.local.Logging
+import io.spine.dependency.local.Reflect
+import io.spine.dependency.local.TestLib
+import io.spine.dependency.local.Time
+import io.spine.dependency.local.ToolBase
+import io.spine.dependency.local.Validation
+import io.spine.dependency.test.JUnit
 import io.spine.gradle.checkstyle.CheckStyleConfig
 import io.spine.gradle.github.pages.updateGitHubPages
 import io.spine.gradle.javac.configureErrorProne
@@ -38,36 +58,48 @@ import io.spine.gradle.javadoc.JavadocConfig
 import io.spine.gradle.kotlin.setFreeCompilerArgs
 import io.spine.gradle.publish.IncrementGuard
 import io.spine.gradle.report.license.LicenseReporter
+import java.util.*
 
 plugins {
+    java
     `java-library`
+    `java-test-fixtures`
     kotlin("jvm")
-    id("module-testing")
-    id("net.ltgt.errorprone")
-    id("detekt-code-analysis")
-    id("pmd-settings")
     id("write-manifest")
-    jacoco
-    `project-report`
+    id("com.google.protobuf")
+    id("module-testing")
+    id("dokka-setup")
+    id("net.ltgt.errorprone")
+    id("pmd-settings")
+    `maven-publish`
+    id("detekt-code-analysis")
+    id("org.jetbrains.kotlinx.kover")
+    id("project-report")
     idea
 }
 apply<BomsPlugin>()
 apply<IncrementGuard>()
-apply<VersionWriter>()
 
-CheckStyleConfig.applyTo(project)
-JavadocConfig.applyTo(project)
 LicenseReporter.generateReportIn(project)
+JavadocConfig.applyTo(project)
+CheckStyleConfig.applyTo(project)
 
 project.run {
     addDependencies()
-    //forceConfigurations()
+    forceConfigurations()
 
-    configureJava(BuildSettings.javaVersion)
+    val javaVersion = BuildSettings.javaVersion
+    configureJava(javaVersion)
     configureKotlin()
+    setupTests()
 
-    configureGitHubPages()
+    val generatedDir = "$projectDir/generated"
+    val generatedResources = "$generatedDir/main/resources"
+    prepareProtocConfigVersionsTask(generatedResources)
+    setupSourceSets(generatedResources)
+
     configureTaskDependencies()
+    setupDocPublishing()
 }
 
 typealias Module = Project
@@ -79,18 +111,100 @@ fun Module.addDependencies() {
         compileOnlyApi(FindBugs.annotations)
         compileOnlyApi(CheckerFramework.annotations)
         ErrorProne.annotations.forEach { compileOnlyApi(it) }
+
+        implementation(Guava.lib)
+        implementation(Logging.lib)
+    }
+}
+
+fun Module.forceConfigurations() {
+    configurations {
+        forceVersions()
+        excludeProtobufLite()
+        all {
+            // Exclude outdated module.
+            exclude(group = "io.spine", module = "spine-logging-backend")
+
+            // Exclude in favor of `spine-validation-java-runtime`.
+            exclude("io.spine", "spine-validate")
+            resolutionStrategy {
+                dependencySubstitution {
+                    // Substitute the legacy artifact coordinates with the new `ToolBase.lib` alias.
+                    substitute(module("io.spine.tools:spine-tool-base"))
+                        .using(module(ToolBase.lib))
+                    substitute(module("io.spine.tools:spine-plugin-base"))
+                        .using(module(ToolBase.pluginBase))
+                }
+
+                val rs = this@resolutionStrategy
+                val cfg = this@all
+                Grpc.forceArtifacts(project, cfg, rs)
+                Ksp.forceArtifacts(project, cfg, rs)
+                Jackson.forceArtifacts(project, cfg, rs)
+                Jackson.DataFormat.forceArtifacts(project, cfg, rs)
+                Jackson.DataType.forceArtifacts(project, cfg, rs)
+                force(
+                    Grpc.bom,
+                    Jackson.bom,
+                    Jackson.annotations,
+                    JUnit.bom,
+                    Kotlin.bom,
+                    Kotlin.Compiler.embeddable,
+                    Kotlin.scriptRuntime,
+                    Kotlin.GradlePlugin.api,
+                    KotlinPoet.ksp,
+                    KotlinPoet.lib,
+                    Protobuf.compiler,
+                    Caffeine.lib,
+                    Reflect.lib,
+                    Roaster.api,
+                    Roaster.jdt,
+                    Base.annotations,
+                    Base.lib,
+                    Base.environment,
+                    Base.format,
+                    Time.lib,
+                    Time.javaExtensions,
+                    Compiler.api,
+                    Compiler.backend,
+                    Compiler.params,
+                    Compiler.gradleApi,
+                    Compiler.pluginLib,
+                    CoreJvm.core,
+                    CoreJvm.client,
+                    CoreJvm.server,
+                    TestLib.lib,
+                    ToolBase.lib,
+                    ToolBase.classicCodegen,
+                    ToolBase.pluginBase,
+                    ToolBase.jvmTools,
+                    ToolBase.gradlePluginApi,
+                    ToolBase.intellijPlatform,
+                    ToolBase.intellijPlatformJava,
+                    ToolBase.protobufSetupPlugins,
+                    ToolBase.psiJava,
+                    Logging.lib,
+                    Logging.libJvm,
+                    Logging.testLib,
+                    Logging.grpcContext,
+                    Compiler.api,
+                    Compiler.gradleApi,
+                    Compiler.jvm,
+                    Validation.javaBundle,
+                    Validation.runtime,
+                )
+            }
+        }
     }
 }
 
 fun Module.configureJava(javaVersion: JavaLanguageVersion) {
-    java {
-        toolchain.languageVersion.set(javaVersion)
-    }
-    tasks {
-        withType<JavaCompile>().configureEach {
-            configureJavac()
-            configureErrorProne()
-        }
+    tasks.withType<JavaCompile>().configureEach {
+        val javaVer = javaVersion.toString()
+        sourceCompatibility = javaVer
+        targetCompatibility = javaVer
+        configureJavac()
+        configureErrorProne()
     }
 }
 
@@ -104,9 +218,74 @@ fun Module.configureKotlin() {
     }
 }
 
-fun Module.configureGitHubPages() {
-    updateGitHubPages(ArtifactVersion.javadocTools) {
-        allowInternalJavadoc.set(true)
+fun Module.setupTests() {
+    tasks {
+        withType<Test> {
+            // See https://github.com/gradle/gradle/issues/18647.
+            jvmArgs(
+                "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+                "--add-opens", "java.base/java.util=ALL-UNNAMED",
+                // Entries required for ErrorProne.
+                "--add-opens", "jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+                "--add-opens", "jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
+                "--add-opens", "jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
+                "--add-opens", "jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED",
+                "--add-opens", "jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+                "--add-opens", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED",
+                "--add-opens", "jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
+                "--add-opens", "jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED"
+            )
+        }
+    }
+}
+
+fun Module.prepareProtocConfigVersionsTask(generatedResources: String) {
+    val prepareProtocConfigVersions by tasks.registering {
+        description = "Prepares the versions.properties file."
+
+        val propertiesFile = file("$generatedResources/versions.properties")
+        outputs.file(propertiesFile)
+
+        val versions = Properties().apply {
+            setProperty("baseVersion", Base.version)
+            setProperty("protobufVersion", Protobuf.version)
+            setProperty("gRPCVersion", Grpc.version)
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        inputs.properties(HashMap(versions) as MutableMap<String, *>)
+
+        doLast {
+            Files.createParentDirs(propertiesFile)
+            propertiesFile.createNewFile()
+            propertiesFile.outputStream().use {
+                versions.store(it,
+                    "Versions of dependencies of the Spine Model Compiler for Java plugin and" +
+                            " the Spine Protoc plugin.")
+            }
+        }
+    }
+
+    tasks.processResources {
+        dependsOn(prepareProtocConfigVersions)
+    }
+}
+
+fun Module.setupSourceSets(generatedResources: String) {
+    sourceSets.main {
+        resources.srcDir(generatedResources)
+    }
+}
+
+/**
+ * Configures documentation publishing for this subproject.
+ */
+fun Module.setupDocPublishing() {
+    updateGitHubPages {
         rootFolder.set(rootDir)
+    }
+
+    tasks.named("publish") {
+        dependsOn("${project.path}:updateGitHubPages")
     }
 }

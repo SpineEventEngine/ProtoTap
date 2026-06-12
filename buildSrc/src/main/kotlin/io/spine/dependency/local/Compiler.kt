@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,12 @@
 
 package io.spine.dependency.local
 
+import io.spine.dependency.Dependency
+
 /**
  * Dependencies on the Spine Compiler modules.
  *
- * To use a locally published ProtoData version instead of the version from a public plugin
+ * To use a locally published Compiler version instead of the version from a public plugin
  * registry, set the `COMPILER_VERSION` and/or the `COMPILER_DF_VERSION` environment variables
  * and stop the Gradle daemons so that Gradle observes the env change:
  * ```
@@ -56,9 +58,9 @@ package io.spine.dependency.local
     "ConstPropertyName" /* We use custom convention for artifact properties. */,
     "MemberVisibilityCanBePrivate" /* The properties are used directly by other subprojects. */,
 )
-object Compiler {
+object Compiler : Dependency() {
     const val pluginGroup = Spine.group
-    const val group = "io.spine.tools"
+    override val group = Spine.toolsGroup
     const val pluginId = "io.spine.compiler"
 
     /**
@@ -67,22 +69,22 @@ object Compiler {
     const val module = "io.spine.tools:compiler"
 
     /**
-     * The version of ProtoData dependencies.
+     * The version of the Compiler dependencies.
      */
-    val version: String
-    private const val fallbackVersion = "2.0.0-SNAPSHOT.028"
+    override val version: String
+    private const val fallbackVersion = "2.0.0-SNAPSHOT.051"
 
     /**
-     * The distinct version of ProtoData used by other build tools.
+     * The distinct version of the Compiler used by other build tools.
      *
-     * When ProtoData is used both for building the project and as a part of the Project's
-     * transitional dependencies, this is the version used to build the project itself.
+     * When the Compiler is used both for building the project and as a part of the Project's
+     * transitive dependencies, this is the version used to build the project itself.
      */
     val dogfoodingVersion: String
-    private const val fallbackDfVersion = "2.0.0-SNAPSHOT.028"
+    private const val fallbackDfVersion = "2.0.0-SNAPSHOT.051"
 
     /**
-     * The artifact for the ProtoData Gradle plugin.
+     * The artifact for the Compiler Gradle plugin.
      */
     val pluginLib: String
 
@@ -128,6 +130,21 @@ object Compiler {
 
     val testlib
         get() = "$group:compiler-testlib:$version"
+
+    override val modules: List<String>
+        get() = listOf(
+            api,
+            backend,
+            params,
+            protocPlugin,
+            gradleApi,
+            cliApi,
+            jvm,
+            fatCli,
+            testlib
+        ).map {
+            it.split(":").let { (group, artifact) -> "$group:$artifact" }
+        }
 
     /**
      * An env variable storing a custom [version].

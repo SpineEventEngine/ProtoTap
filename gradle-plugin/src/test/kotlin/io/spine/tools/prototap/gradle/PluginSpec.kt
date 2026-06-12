@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,15 +29,18 @@ package io.spine.tools.prototap.gradle
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.tools.gradle.task.BaseTaskName.build
+import io.spine.tools.gradle.task.BaseTaskName.clean
 import io.spine.tools.gradle.testing.GradleProject
 import io.spine.tools.prototap.Names.GRADLE_PLUGIN_ID
 import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_FILE
+import io.spine.tools.prototap.Paths.CODE_GENERATOR_REQUEST_JSON_FILE
 import io.spine.tools.prototap.Paths.DESCRIPTOR_SET_FILE
 import io.spine.tools.prototap.Paths.COMPILED_PROTOS_FILE
 import io.spine.tools.prototap.Paths.outputRoot
 import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.exists
+import org.gradle.testkit.runner.TaskOutcome.FROM_CACHE
 import org.gradle.testkit.runner.internal.DefaultGradleRunner
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -63,7 +66,7 @@ internal class PluginSpec {
         createProject("default-values")
         runBuild()
         assertJavaCodeGenerated()
-        assertRequestFileExits()
+        assertRequestFileExists()
         assertCompiledProtosFileExists()
     }
 
@@ -72,7 +75,7 @@ internal class PluginSpec {
         createProject("proto-in-test")
         runBuild()
         assertJavaCodeGenerated()
-        assertRequestFileExits()
+        assertRequestFileExists()
         assertCompiledProtosFileExists()
     }
 
@@ -81,9 +84,9 @@ internal class PluginSpec {
         createProject("with-settings")
         runBuild()
         assertJavaCodeGenerated()
-        assertRequestFileExits()
+        assertRequestFileExists()
         assertCompiledProtosFileExists()
-        assertDescriptorSetFileExits()
+        assertDescriptorSetFileExists()
     }
 
     @Test
@@ -91,7 +94,7 @@ internal class PluginSpec {
         createProject("via-classpath")
         runBuild()
         assertJavaCodeGenerated()
-        assertRequestFileExits()
+        assertRequestFileExists()
         assertCompiledProtosFileExists()
     }
 
@@ -100,7 +103,22 @@ internal class PluginSpec {
         createProject("before-test-fixtures")
         runBuild()
         assertJavaCodeGenerated()
-        assertRequestFileExits()
+        assertRequestFileExists()
+        assertCompiledProtosFileExists()
+    }
+
+    @Test
+    fun `restore tapped files from the build cache`() {
+        createProject("build-cache", "--build-cache")
+        // Populate the build cache.
+        runBuild()
+        project.executeTask(clean)
+        // Re-build with the proto generation task restored from the cache.
+        val result = project.executeTask(build)
+        result.task(":generateTestFixturesProto")?.outcome shouldBe FROM_CACHE
+        assertJavaCodeGenerated()
+        assertRequestFileExists()
+        assertRequestJsonFileExists()
         assertCompiledProtosFileExists()
     }
 
@@ -117,11 +135,15 @@ internal class PluginSpec {
         }
     }
 
-    private fun assertRequestFileExits() {
+    private fun assertRequestFileExists() {
         resultDir.resolve(CODE_GENERATOR_REQUEST_FILE).exists() shouldBe true
     }
 
-    private fun assertDescriptorSetFileExits() {
+    private fun assertRequestJsonFileExists() {
+        resultDir.resolve(CODE_GENERATOR_REQUEST_JSON_FILE).exists() shouldBe true
+    }
+
+    private fun assertDescriptorSetFileExists() {
         resultDir.resolve(DESCRIPTOR_SET_FILE).exists() shouldBe true
     }
 
@@ -129,11 +151,12 @@ internal class PluginSpec {
         resultDir.resolve(COMPILED_PROTOS_FILE).exists() shouldBe true
     }
 
-    private fun createProject(resourceDir: String) {
+    private fun createProject(resourceDir: String, vararg options: String) {
         val version = Plugin.readVersion()
         val builder = GradleProject.setupAt(projectDir)
             .fromResources(resourceDir)
             .withSharedTestKitDirectory()
+            .withOptions(*options)
             .replace("@PROTOTAP_PLUGIN_ID@", GRADLE_PLUGIN_ID)
             .replace("@PROTOTAP_VERSION@", version)
             /* Uncomment the following if you need to debug the build process.
