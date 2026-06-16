@@ -16,7 +16,7 @@ ProtoTap makes that task produce three files under the interim directory
 
 On a build-cache hit the task actions and `protoc` do not run, and Gradle
 restores only the declared outputs (`outputBaseDirProperty`, plus the
-descriptor-set file which protobuf-gradle-plugin already declares via
+descriptor-set file that protobuf-gradle-plugin already declares via
 `@Nested getDescriptorSetOptionsForCaching()` → `@OutputFile path`).
 The interim directory stays empty, `processTestResources` copies nothing
 from it, and consumers fail, e.g. `PluginTestSetup` in `core-jvm-compiler`
@@ -48,7 +48,7 @@ Notes:
 
 New test-resources project `build-cache` (clone of `default-values` with a
 project-local `buildCache.local.directory` in `settings.gradle.kts`), plus
-a `PluginSpec` case which:
+a `PluginSpec` case that:
 
 1. runs `build` with `--build-cache`;
 2. runs `clean`;
