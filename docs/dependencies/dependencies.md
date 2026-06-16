@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine.tools:prototap-api:0.15.0`
+# Dependencies of `io.spine.tools:prototap-api:0.16.0`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -819,14 +819,14 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jun 11 21:55:32 WEST 2026** using 
+This report was generated on **Tue Jun 16 20:11:33 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:prototap-gradle-plugin:0.15.0`
+# Dependencies of `io.spine.tools:prototap-gradle-plugin:0.16.0`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1741,14 +1741,14 @@ This report was generated on **Thu Jun 11 21:55:32 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jun 11 21:55:32 WEST 2026** using 
+This report was generated on **Tue Jun 16 20:11:33 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:prototap-protoc-plugin:0.15.0`
+# Dependencies of `io.spine.tools:prototap-protoc-plugin:0.16.0`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2567,6 +2567,6 @@ This report was generated on **Thu Jun 11 21:55:32 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jun 11 21:55:32 WEST 2026** using 
+This report was generated on **Tue Jun 16 20:11:33 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
