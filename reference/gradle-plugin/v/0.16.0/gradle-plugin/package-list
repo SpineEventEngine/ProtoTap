@@ -1,0 +1,13 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.tools.prototap.gradle////PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/index.html
+$dokka.location:io.spine.tools.prototap.gradle/Extension///PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-extension/index.html
+$dokka.location:io.spine.tools.prototap.gradle/Extension/Extension/#org.gradle.api.Project/PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-extension/-extension.html
+$dokka.location:io.spine.tools.prototap.gradle/Extension/generateDescriptorSet/#/PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-extension/generate-descriptor-set.html
+$dokka.location:io.spine.tools.prototap.gradle/Extension/sourceSet/#/PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-extension/source-set.html
+$dokka.location:io.spine.tools.prototap.gradle/Plugin.Companion///PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-plugin/-companion/index.html
+$dokka.location:io.spine.tools.prototap.gradle/Plugin.Companion/readVersion/#/PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-plugin/-companion/read-version.html
+$dokka.location:io.spine.tools.prototap.gradle/Plugin///PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-plugin/index.html
+$dokka.location:io.spine.tools.prototap.gradle/Plugin/Plugin/#/PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-plugin/-plugin.html
+$dokka.location:io.spine.tools.prototap.gradle/Plugin/apply/#org.gradle.api.Project/PointingToDeclaration/gradle-plugin/io.spine.tools.prototap.gradle/-plugin/apply.html
+io.spine.tools.prototap.gradle
