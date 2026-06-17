@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
         "about_files/**",
 
         "ant_tasks/**", // `resource-ant.jar` is of no use here.
-        
+
         // Protobuf files.
         "google/**",
         "spine/**",
@@ -173,7 +173,7 @@ project.afterEvaluate {
             }
         }
 
-        // Do not add the prefix for the publication which produces
+        // Do not add the prefix for the publication that produces
         // the `io.spine.prototap.gradle.plugin` marker.
 
         // Add the prefix to the `artifactId` of the plugin dependency used in the marker.

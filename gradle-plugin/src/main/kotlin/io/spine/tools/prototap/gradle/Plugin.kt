@@ -56,7 +56,7 @@ import org.gradle.api.tasks.TaskContainer
 import org.gradle.language.jvm.tasks.ProcessResources
 
 /**
- * A Gradle plugin which adds ProtoTap plugin to `protoc` and configures the project
+ * A Gradle plugin that adds ProtoTap plugin to `protoc` and configures the project
  * tasks for copying generated source code and other related files into test resources.
  */
 public class Plugin : Plugin<Project> {
@@ -241,7 +241,7 @@ private fun GenerateProtoTask.grabDescriptorSetFile() {
  * side effects this task does not know about. Declaring the files as task outputs
  * stores them in the build cache, so that a cache hit on this task restores them
  * along with the generated code. Without the declarations, the tapped files would be
- * missing after a cached build, breaking the test suites which load them from resources.
+ * missing after a cached build, breaking the test suites that load them from resources.
  *
  * The descriptor set file produced by [grabDescriptorSetFile] needs no declaration here:
  * Protobuf Gradle Plugin already declares its path as a task output.
