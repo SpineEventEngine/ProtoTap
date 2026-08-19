@@ -129,10 +129,10 @@ fun Module.forceConfigurations() {
             exclude("io.spine", "spine-validate")
             resolutionStrategy {
                 dependencySubstitution {
-                    // Substitute the legacy artifact coordinates with the current ones.
-                    // `io.spine.tools:spine-tool-base` has no successor: the module of
-                    // that name was retired, and its contents are split across
-                    // the focused modules forced below.
+                    // Substitute the legacy artifact coordinate with its current equivalent.
+                    // `io.spine.tools:spine-tool-base` has no such equivalent: the module
+                    // of that name was retired, and its contents are now split across
+                    // the focused modules declared in `ToolBase`.
                     substitute(module("io.spine.tools:spine-plugin-base"))
                         .using(module(ToolBase.pluginBase))
                 }
