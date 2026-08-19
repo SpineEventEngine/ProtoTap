@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -129,9 +129,10 @@ fun Module.forceConfigurations() {
             exclude("io.spine", "spine-validate")
             resolutionStrategy {
                 dependencySubstitution {
-                    // Substitute the legacy artifact coordinates with the new `ToolBase.lib` alias.
-                    substitute(module("io.spine.tools:spine-tool-base"))
-                        .using(module(ToolBase.lib))
+                    // Substitute the legacy artifact coordinates with the current ones.
+                    // `io.spine.tools:spine-tool-base` has no successor: the module of
+                    // that name was retired, and its contents are split across
+                    // the focused modules forced below.
                     substitute(module("io.spine.tools:spine-plugin-base"))
                         .using(module(ToolBase.pluginBase))
                 }
@@ -174,7 +175,9 @@ fun Module.forceConfigurations() {
                     CoreJvm.client,
                     CoreJvm.server,
                     TestLib.lib,
-                    ToolBase.lib,
+                    ToolBase.code,
+                    ToolBase.fs,
+                    ToolBase.protoCode,
                     ToolBase.classicCodegen,
                     ToolBase.pluginBase,
                     ToolBase.jvmTools,
