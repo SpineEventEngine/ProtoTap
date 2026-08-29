@@ -24,4 +24,4 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extra.set("versionToPublish", "0.17.0")
+extra.set("versionToPublish", "0.17.1")
