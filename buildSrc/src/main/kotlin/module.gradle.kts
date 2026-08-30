@@ -32,12 +32,12 @@ import io.spine.dependency.build.CheckerFramework
 import io.spine.dependency.build.ErrorProne
 import io.spine.dependency.build.FindBugs
 import io.spine.dependency.build.Ksp
+import io.spine.dependency.kotlinx.AtomicFu
+import io.spine.dependency.kotlinx.Coroutines
 import io.spine.dependency.lib.Caffeine
 import io.spine.dependency.lib.Grpc
 import io.spine.dependency.lib.Guava
 import io.spine.dependency.lib.Jackson
-import io.spine.dependency.kotlinx.AtomicFu
-import io.spine.dependency.kotlinx.Coroutines
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.lib.KotlinPoet
 import io.spine.dependency.lib.Protobuf
@@ -124,6 +124,11 @@ fun Module.forceConfigurations() {
         forceVersions()
         excludeProtobufLite()
         all {
+            // NB: no `isDokka` guard here, unlike `jvm-module`/`kmp-module`.
+            // Dokka's generator runtime pulls `io.spine:spine-base` at a
+            // version that is no longer published, and these forces are what
+            // upgrade it; excluding `dokka*` fails `dokkaGenerate` outright.
+
             // Exclude outdated module.
             exclude(group = "io.spine", module = "spine-logging-backend")
 
@@ -147,17 +152,17 @@ fun Module.forceConfigurations() {
                 Jackson.DataFormat.forceArtifacts(project, cfg, rs)
                 Jackson.DataType.forceArtifacts(project, cfg, rs)
                 force(
-                    // Floor artifacts request the pre-refresh versions of
-                    // these, tripping `failOnVersionConflict()`; the Protobuf
-                    // runtime must never be older than the refreshed gencode.
-                    Coroutines.bom,
-                    AtomicFu.lib,
-                    Protobuf.javaLib,
                     Grpc.bom,
                     Jackson.bom,
                     Jackson.annotations,
                     JUnit.bom,
                     Kotlin.bom,
+                    // Floor artifacts request the pre-refresh versions of these,
+                    // tripping `failOnVersionConflict()`. Neither is covered by
+                    // `Coroutines.modules` or `BomsPlugin`, which applies a plain
+                    // `platform` that loses to a higher transitive request.
+                    Coroutines.bom,
+                    AtomicFu.lib,
                     Kotlin.Compiler.embeddable,
                     Kotlin.scriptRuntime,
                     Kotlin.GradlePlugin.api,
