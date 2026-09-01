@@ -1,0 +1,26 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.tools.prototap////PointingToDeclaration/api/io.spine.tools.prototap/index.html
+$dokka.location:io.spine.tools.prototap/CompiledProtosFile///PointingToDeclaration/api/io.spine.tools.prototap/-compiled-protos-file/index.html
+$dokka.location:io.spine.tools.prototap/CompiledProtosFile/CompiledProtosFile/#java.lang.ClassLoader/PointingToDeclaration/api/io.spine.tools.prototap/-compiled-protos-file/-compiled-protos-file.html
+$dokka.location:io.spine.tools.prototap/CompiledProtosFile/exists/#/PointingToDeclaration/api/io.spine.tools.prototap/-compiled-protos-file/exists.html
+$dokka.location:io.spine.tools.prototap/CompiledProtosFile/list/#/PointingToDeclaration/api/io.spine.tools.prototap/-compiled-protos-file/list.html
+$dokka.location:io.spine.tools.prototap/CompiledProtosFile/listFiles/#kotlin.Function1[kotlin.String,TypeParam(bounds=[kotlin.Any])]/PointingToDeclaration/api/io.spine.tools.prototap/-compiled-protos-file/list-files.html
+$dokka.location:io.spine.tools.prototap/Names///PointingToDeclaration/api/io.spine.tools.prototap/-names/index.html
+$dokka.location:io.spine.tools.prototap/Names/DEFAULT_SOURCE_SET_NAME/#/PointingToDeclaration/api/io.spine.tools.prototap/-names/-d-e-f-a-u-l-t_-s-o-u-r-c-e_-s-e-t_-n-a-m-e.html
+$dokka.location:io.spine.tools.prototap/Names/FALLBACK_SOURCE_SET_NAME/#/PointingToDeclaration/api/io.spine.tools.prototap/-names/-f-a-l-l-b-a-c-k_-s-o-u-r-c-e_-s-e-t_-n-a-m-e.html
+$dokka.location:io.spine.tools.prototap/Names/GRADLE_EXTENSION_NAME/#/PointingToDeclaration/api/io.spine.tools.prototap/-names/-g-r-a-d-l-e_-e-x-t-e-n-s-i-o-n_-n-a-m-e.html
+$dokka.location:io.spine.tools.prototap/Names/GRADLE_PLUGIN_ID/#/PointingToDeclaration/api/io.spine.tools.prototap/-names/-g-r-a-d-l-e_-p-l-u-g-i-n_-i-d.html
+$dokka.location:io.spine.tools.prototap/Names/PROTOC_PLUGIN_CLASSIFIER/#/PointingToDeclaration/api/io.spine.tools.prototap/-names/-p-r-o-t-o-c_-p-l-u-g-i-n_-c-l-a-s-s-i-f-i-e-r.html
+$dokka.location:io.spine.tools.prototap/Names/PROTOC_PLUGIN_NAME/#/PointingToDeclaration/api/io.spine.tools.prototap/-names/-p-r-o-t-o-c_-p-l-u-g-i-n_-n-a-m-e.html
+$dokka.location:io.spine.tools.prototap/Names/TEST_FIXTURES_PLUGIN_NAME/#/PointingToDeclaration/api/io.spine.tools.prototap/-names/-t-e-s-t_-f-i-x-t-u-r-e-s_-p-l-u-g-i-n_-n-a-m-e.html
+$dokka.location:io.spine.tools.prototap/Paths///PointingToDeclaration/api/io.spine.tools.prototap/-paths/index.html
+$dokka.location:io.spine.tools.prototap/Paths/CODE_GENERATOR_REQUEST_FILE/#/PointingToDeclaration/api/io.spine.tools.prototap/-paths/-c-o-d-e_-g-e-n-e-r-a-t-o-r_-r-e-q-u-e-s-t_-f-i-l-e.html
+$dokka.location:io.spine.tools.prototap/Paths/CODE_GENERATOR_REQUEST_JSON_FILE/#/PointingToDeclaration/api/io.spine.tools.prototap/-paths/-c-o-d-e_-g-e-n-e-r-a-t-o-r_-r-e-q-u-e-s-t_-j-s-o-n_-f-i-l-e.html
+$dokka.location:io.spine.tools.prototap/Paths/COMPILED_PROTOS_FILE/#/PointingToDeclaration/api/io.spine.tools.prototap/-paths/-c-o-m-p-i-l-e-d_-p-r-o-t-o-s_-f-i-l-e.html
+$dokka.location:io.spine.tools.prototap/Paths/DESCRIPTOR_SET_FILE/#/PointingToDeclaration/api/io.spine.tools.prototap/-paths/-d-e-s-c-r-i-p-t-o-r_-s-e-t_-f-i-l-e.html
+$dokka.location:io.spine.tools.prototap/Paths/TARGET_DIR/#/PointingToDeclaration/api/io.spine.tools.prototap/-paths/-t-a-r-g-e-t_-d-i-r.html
+$dokka.location:io.spine.tools.prototap/Paths/interimDir/#kotlin.String/PointingToDeclaration/api/io.spine.tools.prototap/-paths/interim-dir.html
+$dokka.location:io.spine.tools.prototap/Paths/outputFile/#kotlin.String#kotlin.String/PointingToDeclaration/api/io.spine.tools.prototap/-paths/output-file.html
+$dokka.location:io.spine.tools.prototap/Paths/outputRoot/#kotlin.String/PointingToDeclaration/api/io.spine.tools.prototap/-paths/output-root.html
+io.spine.tools.prototap
