@@ -44,7 +44,7 @@ sourceSets {
     }
 }
 
-val createVersionFile by tasks.registering {
+val createVersionFile = tasks.register("createVersionFile") {
 
     inputs.property("version", project.version)
     outputs.file(versionFile)

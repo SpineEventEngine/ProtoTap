@@ -59,7 +59,7 @@ dependencies {
 )
 testing {
     suites {
-        val test by getting(JvmTestSuite::class) {
+        named<JvmTestSuite>("test") {
             useJUnitJupiter(JUnit.version)
             dependencies {
                 implementation(Kotlin.GradlePlugin.lib)
@@ -75,7 +75,7 @@ testing {
  * Make functional tests depend on publishing all the submodules to Maven Local so that
  * the Gradle plugin can get all the dependencies when it's applied to the test projects.
  */
-val test: Task by tasks.getting {
+tasks.named("test") {
     val task = this
     rootProject.subprojects.forEach { subproject ->
         task.dependsOn(":${subproject.name}:publishToMavenLocal")
@@ -87,7 +87,7 @@ java {
     withJavadocJar()
 }
 
-val shadowJar by tasks.getting(ShadowJar::class) {
+tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("")
     exclude(
         "org/checkerframework/**",
@@ -195,25 +195,19 @@ project.afterEvaluate {
 }
 
 // The version declared in `version.gradle.kts`.
-val versionToPublish: String by extra
-
-// Do not attempt to publish snapshot versions to comply with publishing rules.
-// See: https://plugins.gradle.org/docs/publish-plugin#approval
-val publishPlugins: Task by tasks.getting {
-    enabled = !versionToPublish.isSnapshot()
-}
-
-val publish: Task by tasks.getting {
-    dependsOn(publishPlugins)
-}
+val versionToPublish = extra["versionToPublish"] as String
 
 tasks {
-    ideaModule {
-        notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/13480")
+    publishPlugins {
+        // Do not attempt to publish snapshot versions to comply with publishing rules.
+        // See: https://plugins.gradle.org/docs/publish-plugin#approval
+        enabled = !versionToPublish.isSnapshot()
+
+        notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/21283")
     }
 
-    publishPlugins {
-        notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/21283")
+    named("publish") {
+        dependsOn(publishPlugins)
     }
 }
 

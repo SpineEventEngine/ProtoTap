@@ -77,7 +77,6 @@ plugins {
     id("detekt-code-analysis")
     id("org.jetbrains.kotlinx.kover")
     id("project-report")
-    idea
 }
 apply<BomsPlugin>()
 apply<IncrementGuard>()
@@ -256,7 +255,7 @@ fun Module.setupTests() {
 }
 
 fun Module.prepareProtocConfigVersionsTask(generatedResources: String) {
-    val prepareProtocConfigVersions by tasks.registering {
+    val prepareProtocConfigVersions = tasks.register("prepareProtocConfigVersions") {
         description = "Prepares the versions.properties file."
 
         val propertiesFile = file("$generatedResources/versions.properties")
