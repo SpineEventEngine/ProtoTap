@@ -206,7 +206,7 @@ tasks {
         notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/21283")
     }
 
-    named("publish") {
+    publish {
         dependsOn(publishPlugins)
     }
 }
