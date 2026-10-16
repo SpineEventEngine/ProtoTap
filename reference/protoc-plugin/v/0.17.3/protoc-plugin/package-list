@@ -1,0 +1,5 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.tools.prototap.protoc////PointingToDeclaration/protoc-plugin/io.spine.tools.prototap.protoc/index.html
+$dokka.location:io.spine.tools.prototap.protoc//main/#/PointingToDeclaration/protoc-plugin/io.spine.tools.prototap.protoc/main.html
+io.spine.tools.prototap.protoc
