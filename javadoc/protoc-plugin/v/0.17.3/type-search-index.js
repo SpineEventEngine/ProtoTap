@@ -1,0 +1,1 @@
+var typeSearchIndex = [{"p":"io.spine.tools.prototap.protoc","l":"Plugin","url":"io/spine/tools/prototap/protoc/Plugin.html"}, {"l":"All classes","url":"allclasses.html"}]
