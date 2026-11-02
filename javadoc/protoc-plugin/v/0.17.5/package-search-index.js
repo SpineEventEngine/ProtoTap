@@ -1,0 +1,1 @@
+var packageSearchIndex = [{"l":"io.spine.tools.prototap.protoc","url":"io/spine/tools/prototap/protoc/package-summary.html"}, {"l":"All packages","url":"index.html"}]

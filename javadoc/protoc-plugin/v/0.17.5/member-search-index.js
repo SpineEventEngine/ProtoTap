@@ -1,0 +1,1 @@
+var memberSearchIndex = [{"p":"io.spine.tools.prototap.protoc","c":"Plugin","l":"main()","url":"io/spine/tools/prototap/protoc/Plugin.html#main()"}]
