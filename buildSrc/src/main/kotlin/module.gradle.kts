@@ -53,7 +53,7 @@ import io.spine.dependency.local.ToolBase
 import io.spine.dependency.local.Validation
 import io.spine.dependency.test.JUnit
 import io.spine.gradle.checkstyle.CheckStyleConfig
-import io.spine.gradle.github.pages.updateGitHubPages
+import io.spine.gradle.github.pages.publishApiDocs
 import io.spine.gradle.javac.configureErrorProne
 import io.spine.gradle.javac.configureJavac
 import io.spine.gradle.javadoc.JavadocConfig
@@ -296,11 +296,7 @@ fun Module.setupSourceSets(generatedResources: String) {
  * Configures documentation publishing for this subproject.
  */
 fun Module.setupDocPublishing() {
-    updateGitHubPages {
+    publishApiDocs {
         rootFolder.set(rootDir)
-    }
-
-    tasks.named("publish") {
-        dependsOn("${project.path}:updateGitHubPages")
     }
 }
