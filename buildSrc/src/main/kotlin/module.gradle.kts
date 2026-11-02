@@ -41,7 +41,6 @@ import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.lib.KotlinPoet
 import io.spine.dependency.lib.Protobuf
-import io.spine.dependency.lib.Roaster
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Compiler
 import io.spine.dependency.local.CoreJvm
@@ -170,8 +169,6 @@ fun Module.forceConfigurations() {
                     Protobuf.compiler,
                     Caffeine.lib,
                     Reflect.lib,
-                    Roaster.api,
-                    Roaster.jdt,
                     Base.annotations,
                     Base.lib,
                     Base.environment,

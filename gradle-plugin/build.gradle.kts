@@ -91,7 +91,6 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("")
     exclude(
         "org/checkerframework/**",
-        "org/jboss/**",
 
         // Exclude license files that cause or may cause issues with LicenseReport.
         // We analyze these files when building artifacts we depend on.
@@ -114,7 +113,6 @@ tasks.named<ShadowJar>("shadowJar") {
         "META-INF/maven/**",
         "META-INF/native-image/**",
         "META-INF/proguard/**",
-        "META-INF/services/org.jboss.forge.roaster.*.*",
         "META-INF/eclipse.inf",
 
         // Checker Framework license.
