@@ -59,11 +59,12 @@ tasks.jar {
     duplicatesStrategy = INCLUDE
 }
 
-// The only JAR of the publication has the `exe` classifier, so the POM declares
-// the `pom` packaging rather than the `jar` one set by `StandardJavaPublicationHandler`.
+// The executable JAR has the `exe` classifier, so the publication has no main artifact.
+// Hence, the POM declares the `pom` packaging rather than the `jar` one set by
+// `StandardJavaPublicationHandler`.
 //
-// We set it in `afterEvaluate`, which runs after the one in which `SpinePublishing`
-// creates the publication.
+// We set the packaging in `afterEvaluate`, which runs after the one in which
+// `SpinePublishing` creates the publication.
 //
 afterEvaluate {
     publishing {
