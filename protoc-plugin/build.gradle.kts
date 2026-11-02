@@ -28,6 +28,7 @@ import io.spine.dependency.lib.Protobuf
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.TestLib
 import io.spine.dependency.local.ToolBase
+import io.spine.gradle.publish.StandardJavaPublicationHandler
 import org.gradle.api.file.DuplicatesStrategy.INCLUDE
 
 dependencies {
@@ -56,4 +57,19 @@ tasks.jar {
     )
     archiveClassifier.set("exe")
     duplicatesStrategy = INCLUDE
+}
+
+// The executable JAR has the `exe` classifier, so the publication has no main artifact.
+// Hence, the POM declares the `pom` packaging rather than the `jar` one set by
+// `StandardJavaPublicationHandler`.
+//
+// We set the packaging in `afterEvaluate`, which runs after the one in which
+// `SpinePublishing` creates the publication.
+//
+afterEvaluate {
+    publishing {
+        publications.named<MavenPublication>(StandardJavaPublicationHandler.PUBLICATION_NAME) {
+            pom.packaging = "pom"
+        }
+    }
 }
